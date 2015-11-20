@@ -14,7 +14,7 @@ var EventEmitter = require('events').EventEmitter;
 
 // ##Auth Dependencies
 var passport = require('passport');
-var flash = require('connect-flash');
+//var flash = require('connect-flash');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -31,13 +31,13 @@ app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser()); // get information from html forms
 
-app.set('view engine', 'ejs'); // set up ejs for templating
+//app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({ secret: 'imOldGreggggggg' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
+//app.use(flash()); // use connect-flash for flash messages stored in session
 
 // load our routes and pass in our app and fully configured passport --> will need this when put routes in seperate file
 // basically this just keep us from needing to require app and passport in that file
@@ -99,30 +99,11 @@ app.get('/564eca8fe594c70300b6380b', isLoggedIn, function(req, res) {
     }
   });
 });
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-// oritional code below commented out and route hard coded in above
-// app.get('/*', isLoggedIn, function(req, res) {
-//   var id = req.url.slice(1);
-//   Board.boardModel.findOne({id: id}, function(err, board) {
-//     // If the board doesn't exist, or the route is invalid,
-//     // then redirect to the home page.
-//     if (err) {
-//       res.redirect('/');
-//     } else {
-//       // Invoke [request handler](../documentation/sockets.html) for a new socket connection
-//       // with board id as the Socket.io namespace.
-//       handleSocket(req.url, board, io);
-//       // Send back whiteboard html template.
-//       res.sendFile(__dirname + '/public/board.html');
-//     }
-//   });
-// });
 
 ///////////////////// FACEBOOK ROUTES //////////////////////////////////////////
 
 // route for facebook authentication and login
-app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
 
 // handle the callback after facebook has authenticated the user
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
@@ -145,5 +126,5 @@ function isLoggedIn(req, res, next) {
 
 // **Start the server.**
 http.listen(port, function() {
-  console.log('server listening on', port, 'at', new Date());
+  console.log('The magic is happening on ', port, 'at', new Date());
 });
