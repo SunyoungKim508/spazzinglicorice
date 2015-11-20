@@ -6,8 +6,9 @@ var bookmarkSchema = new mongoose.Schema({
   url: String
 });
 
+var Schema = mongoose.Schema;
+
 var userSchema = new mongoose.Schema({
-  id: String,
   token: String,
   name: String,
   email: String,
