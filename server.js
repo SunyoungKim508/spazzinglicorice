@@ -80,7 +80,10 @@ app.get('/new', function(req, res) {
 
 
 // **Wildcard route & board id handler.**
-app.get('/*', isLoggedIn, function(req, res) {
+
+//TODO: Need this to be acutally routed --> COMMENTED OUT ORIGIONAL BELOW
+////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/564eca8fe594c70300b6380b', isLoggedIn, function(req, res) {
   var id = req.url.slice(1);
   Board.boardModel.findOne({id: id}, function(err, board) {
     // If the board doesn't exist, or the route is invalid,
@@ -96,6 +99,25 @@ app.get('/*', isLoggedIn, function(req, res) {
     }
   });
 });
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// oritional code below commented out and route hard coded in above
+// app.get('/*', isLoggedIn, function(req, res) {
+//   var id = req.url.slice(1);
+//   Board.boardModel.findOne({id: id}, function(err, board) {
+//     // If the board doesn't exist, or the route is invalid,
+//     // then redirect to the home page.
+//     if (err) {
+//       res.redirect('/');
+//     } else {
+//       // Invoke [request handler](../documentation/sockets.html) for a new socket connection
+//       // with board id as the Socket.io namespace.
+//       handleSocket(req.url, board, io);
+//       // Send back whiteboard html template.
+//       res.sendFile(__dirname + '/public/board.html');
+//     }
+//   });
+// });
 
 ///////////////////// FACEBOOK ROUTES //////////////////////////////////////////
 
@@ -103,10 +125,9 @@ app.get('/*', isLoggedIn, function(req, res) {
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
 // handle the callback after facebook has authenticated the user
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {
-    successRedirect : '/564eca8fe594c70300b6380b', // TODO: fix routing to go to profile after login
-    failureRedirect : '/'
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirect : '/564eca8fe594c70300b6380b', // TODO: fix routing to go to profile after login
+  failureRedirect : '/564eca8fe594c70300b6380b'
 }));
 
 ///////////////////////////////////////////////////////////////////////////////////////////
