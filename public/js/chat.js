@@ -4,7 +4,8 @@ angular.module('whiteboard.chat', [])
   var ioRoom = window.location.href;
   // all messages from users will be stored in texts array
   $scope.texts = [];
-
+  // scope.watch
+  
   // using io instance(socket) by calling it ioRoom(namespace)
   var socket = io(ioRoom);
   $scope.sendMessage = function (message, $event) {
@@ -15,8 +16,6 @@ angular.module('whiteboard.chat', [])
   }
 
   socket.on('chat message', function (msg) {
-    console.log('are you?');
-    console.log(msg);
     $scope.texts.push(msg);
   });
 })

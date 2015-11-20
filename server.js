@@ -66,7 +66,7 @@ app.get('/documentation', function(req, res) {
 // **Get a new whiteboard**
 app.get('/new', function(req, res) {
   // Create a new mongoose board model.
-  var board = new Board.boardModel({strokes: []});
+  var board = new Board({strokes: []});
   var id = board._id.toString();
   board.save(function(err, board) {
     if (err) { console.error(err); }
@@ -123,6 +123,13 @@ function isLoggedIn(req, res, next) {
     res.redirect('/');
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
+
+var userRouter = express.Router();
+var boardRouter = express.Router();
+app.use('/api/user', userRouter);
+app.use('/api/board', boardRouter);
+require('./server/user/userRoutes.js')(userRouter);
+require('./server/board/booadRoutes.js')(boardRouter);
 
 // **Start the server.**
 http.listen(port, function() {
