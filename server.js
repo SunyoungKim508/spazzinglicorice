@@ -12,11 +12,38 @@ var port = process.env.PORT || 8080;
 var handleSocket = require('./server/sockets');
 var EventEmitter = require('events').EventEmitter;
 
+// ##Auth Dependencies
+var passport = require('passport');
+var flash = require('connect-flash');
+var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+
 var emitter = new EventEmitter();
 emitter.setMaxListeners(0);
 
-// ## Routes
 
+// **Auth Configuration //////////////////////////////////////////////////
+require('./auth/passport')(passport); // pass passport for configuration
+
+app.use(morgan('dev')); // log every request to the console
+app.use(cookieParser()); // read cookies (needed for auth)
+app.use(bodyParser()); // get information from html forms
+
+app.set('view engine', 'ejs'); // set up ejs for templating
+
+// required for passport
+app.use(session({ secret: 'imOldGreggggggg' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
+//////////////////////////////////////////////////////////////////////////
+
+// ## Routes
 // **Static folder for serving application assets**
 app.use('/', express.static(__dirname + '/public'));
 
@@ -51,7 +78,7 @@ app.get('/new', function(req, res) {
 
 
 // **Wildcard route & board id handler.**
-app.get('/*', function(req, res) {
+app.get('/*', isLoggedIn, function(req, res) {
   var id = req.url.slice(1);
   Board.boardModel.findOne({id: id}, function(err, board) {
     // If the board doesn't exist, or the route is invalid,
@@ -67,6 +94,19 @@ app.get('/*', function(req, res) {
     }
   });
 });
+
+///////////////////////////////////////////////////////////////////////////////////////////
+// function to verify if user is authenticated --> will need to move to routes
+function isLoggedIn(req, res, next) {
+
+    // if user is authenticated in the session, carry on 
+    if (req.isAuthenticated())
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}
+///////////////////////////////////////////////////////////////////////////////////////////
 
 // **Start the server.**
 http.listen(port, function() {

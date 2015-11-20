@@ -8,6 +8,7 @@ var bookmarkSchema = new mongoose.Schema({
 
 var userSchema = new mongoose.Schema({
   id: String,
+  token: String,
   bookmarks: [bookmarkSchema]
 });
 
