@@ -10,6 +10,10 @@ var io = require('socket.io')(http);
 var Board = require('./db/board');
 var port = process.env.PORT || 8080;
 var handleSocket = require('./server/sockets');
+var EventEmitter = require('events').EventEmitter;
+
+var emitter = new EventEmitter();
+emitter.setMaxListeners(0);
 
 // ## Routes
 
