@@ -18,8 +18,8 @@ var connect = function(boardUrl, board, io) {
 
   whiteboard.once('connection', function(socket) {
     //require our separate modules - drawing, chat, etc...
-    require('./drawing/drawing.js')(socket, Board);
-    require('./chatter/chatter.js')(socket, Board);
+    require('./drawing/drawing.js')(socket, Board, whiteboard);
+    require('./chatter/chatter.js')(socket, Board, whiteboard);
 
     // Send the current state of the board to the client immediately on joining.
     socket.emit('join', board);

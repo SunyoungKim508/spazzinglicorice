@@ -59,7 +59,9 @@
     
   </div>
   <div ng-controller="ChatCtrl">
-    <ul id="messages"></ul>
+    <ul id="messages" ng-repeat="text in texts">
+      <li><span></span>{{text}}<li>
+    </ul>
     <form action="" ng-submit="sendMessage(message, $event)">
       <input id="m" ng-model="message" autocomplete="off"/><button>Send</button>
     </form>
