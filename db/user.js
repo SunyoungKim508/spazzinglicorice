@@ -9,6 +9,7 @@ var bookmarkSchema = new mongoose.Schema({
 var Schema = mongoose.Schema;
 
 var userSchema = new mongoose.Schema({
+  facebookId: String,
   token: String,
   name: String,
   email: String,
