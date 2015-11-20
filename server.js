@@ -97,6 +97,18 @@ app.get('/*', isLoggedIn, function(req, res) {
   });
 });
 
+///////////////////// FACEBOOK ROUTES //////////////////////////////////////////
+
+// route for facebook authentication and login
+app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+// handle the callback after facebook has authenticated the user
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', {
+    successRedirect : '/564eca8fe594c70300b6380b', // TODO: fix routing to go to profile after login
+    failureRedirect : '/'
+}));
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 // function to verify if user is authenticated --> will need to move to routes
 function isLoggedIn(req, res, next) {
