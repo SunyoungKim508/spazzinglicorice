@@ -1,0 +1,24 @@
+{
+  "name": "spazzinglicorice",
+  "description": "Multiplayer Whiteboard",
+  "main": "app.js",
+  "authors": [
+    "PulseLabs"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/PulseLabs/spazzinglicorice",
+  "moduleType": [
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation": "~5.5.3"
+  }
+}
