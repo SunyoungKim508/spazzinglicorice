@@ -4,7 +4,7 @@
 
 // Initialize the whiteboard module.
 
-angular.module('whiteboard', ['whiteboard.chat', 'whiteboard.services', 'ui.router'])
+angular.module('whiteboard', ['whiteboard.chat', 'whiteboard.services', 'whiteboard.profile', 'ui.router'])
   .config(function($stateProvider) {
     $stateProvider
       .state('eraser', {

@@ -7,11 +7,11 @@ var db = require('./config');
 
 var boardSchema = new mongoose.Schema({
   // change id to name
-  name: String,
+  id: String,
   strokes: Array
 });
 
 var Board = mongoose.model('board', boardSchema);
 
 // Required by [Server](../documentation/server.html) & [Socket Connection Handler](../documentation/sockets.html)
-module.exports.boardModel = Board;
+module.exports = Board;
