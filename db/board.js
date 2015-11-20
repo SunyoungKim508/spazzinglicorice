@@ -6,7 +6,8 @@ var mongoose = require('mongoose');
 var db = require('./config');
 
 var boardSchema = new mongoose.Schema({
-  id: String,
+  // change id to name
+  name: String,
   strokes: Array
 });
 
