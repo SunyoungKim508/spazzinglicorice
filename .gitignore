@@ -28,3 +28,6 @@ node_modules
 
 # Super secret information
 db/mongokeys.js
+
+#bower
+public/bower_components/*

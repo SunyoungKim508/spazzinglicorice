@@ -37,7 +37,6 @@ app.use(bodyParser()); // get information from html forms
 app.use(session({ secret: 'imOldGreggggggg' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
-//app.use(flash()); // use connect-flash for flash messages stored in session
 
 // load our routes and pass in our app and fully configured passport --> will need this when put routes in seperate file
 // basically this just keep us from needing to require app and passport in that file
@@ -85,7 +84,7 @@ app.get('/new', function(req, res) {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/564eca8fe594c70300b6380b', isLoggedIn, function(req, res) {
   var id = req.url.slice(1);
-  Board.boardModel.findOne({id: id}, function(err, board) {
+  Board.findOne({id: id}, function(err, board) {
     // If the board doesn't exist, or the route is invalid,
     // then redirect to the home page.
     if (err) {
@@ -115,6 +114,8 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 // function to verify if user is authenticated --> will need to move to routes
 function isLoggedIn(req, res, next) {
 
+    console.log(req.isAuthenticated());
+
     // if user is authenticated in the session, carry on 
     if (req.isAuthenticated())
         return next();
@@ -129,7 +130,7 @@ var boardRouter = express.Router();
 app.use('/api/user', userRouter);
 app.use('/api/board', boardRouter);
 require('./server/user/userRoutes.js')(userRouter);
-require('./server/board/booadRoutes.js')(boardRouter);
+require('./server/board/boardRoutes.js')(boardRouter);
 
 // **Start the server.**
 http.listen(port, function() {
