@@ -1,12 +1,11 @@
 // userController.js
 var User = require('../../db/user.js');
 var Q = require('q');
-var user = 'Sunyoung';
 module.exports = {
-  getTodos: function (req, res, user) {
+  getTodos: function (req, res) {
     var findTodos = Q.nbind(User.findOne, User);
-
-    findTodos({firstName: user})
+    console.log('server:getTodos');
+    findTodos({firstName: 'Sunyoung'})
       .then(function (user) {
         res.json(user.todos);
       })
@@ -17,7 +16,7 @@ module.exports = {
 
   // need user to add todo
   // user from the session
-  addTodo: function (req, res, user, todo) {
+  addTodo: function (req, res) {
     var findUser = Q.nbind(User.findOne, User);
 
     findUser({firstName: user})
@@ -32,10 +31,10 @@ module.exports = {
       });
   },
 
-  getBookmarks: function (req, res, user) {
+  getBookmarks: function (req, res) {
     var findBookmarks = Q.nbind(User.findOne, User);
-
-    findBookmarks({firstName: user})
+    console.log('server:getBookmarks');
+    findBookmarks({firstName: 'Sunyoung'})
       .then(function (user) {
         res.json(user.bookmarks);
       })
@@ -44,7 +43,12 @@ module.exports = {
       });
   },
 
-  addBookmark: function (req, res, bookmark) {
+  getBookmark: function (req, res) {
+    var url = req.params.url;
+    res.redirect('/' + url);
+  },
+
+  addBookmark: function (req, res) {
     var findUser = Q.nbind(User.findOne, User);
 
     findUser({firstName: user})
@@ -57,8 +61,7 @@ module.exports = {
       .fail(function (error) {
         next(error);
       });
-  }
-  ,
+  },
   getUser: function () {
   }
 }

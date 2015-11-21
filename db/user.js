@@ -20,7 +20,7 @@ var userSchema = new Schema({
   lastName: String,
   email: String,
   bookmarks: [bookmarkSchema],
-  todos: Array
+  todos: []
 });
 
 var User = mongoose.model('user', userSchema);

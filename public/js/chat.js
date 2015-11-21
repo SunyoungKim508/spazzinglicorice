@@ -10,16 +10,18 @@ angular.module('whiteboard.chat', [])
   var socket = io(ioRoom);
   $scope.sendMessage = function (message, $event) {
     $event.preventDefault();
+    console.log('angular: '+ message);
     socket.emit('chat message', message);
     $scope.message = '';
     return false;
   }
 
   socket.on('chat message', function (msg) {
+    console.log('socket'+ msg);
     $scope.texts.push(msg);
   });  
 
-  $scope.watch('texts', function () {
+  $scope.$watch('texts', function () {
     console.log('hi: texts');
   });
 

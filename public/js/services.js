@@ -12,7 +12,7 @@ angular.module('whiteboard.services', [])
   var createBoard = function (name) {
     return $http({
       method: 'POST',
-      data: name,
+      data: {name: name},
       url: 'http://localhost:8080/api/board'
     });
   };
@@ -22,6 +22,7 @@ angular.module('whiteboard.services', [])
   }
 })
 .factory('User', function ($http) {
+  // TODO: get username from session
   var getUser = function () {
     return $http({
       method: 'GET',
@@ -32,17 +33,20 @@ angular.module('whiteboard.services', [])
     });
   };
 
+  // TODO: get username from session
   var getTodos = function () {
     return $http({
       method: 'GET',
       url: 'http://localhost:8080/api/user/todo'
     }).then(function (res) {
       // return todos list(Array)
+      console.log('please get Todos');
       console.log(res);
       return res.data;
     });
   };
 
+  // TODO: get username from session
   var addTodo = function (todo) {
     return $http({
       method: 'POST',
@@ -51,6 +55,7 @@ angular.module('whiteboard.services', [])
     });
   };
 
+  // TODO: get username from session
   var getBookmarks = function () {
     return $http({
       method: 'GET',
@@ -62,6 +67,7 @@ angular.module('whiteboard.services', [])
     });
   };
 
+  // TODO: get username from session
   var addBookmark = function (bookmark) {
     return $http({
       method: 'POST',
@@ -69,6 +75,18 @@ angular.module('whiteboard.services', [])
       url: 'http://localhost:8080/api/user/bookmark'
     });
   };
+
+  var getBookmark = function (bookmarkUrl) {
+    return $http({
+      method: 'GET',
+      url: 'http://localhost:8080/api/user/bookmark/' + bookmarkUrl
+    }).then(function (res) {
+      // return bookmarks list(Array)
+      console.log(res);
+      return res.data;
+    });
+  };
+
 
 
   var getAllUser = function () {
@@ -80,7 +98,8 @@ angular.module('whiteboard.services', [])
     getTodos: getTodos,
     addBookmark: addBookmark,
     getBookmarks: getBookmarks,
-    getUser: getUser
+    getUser: getUser,
+    getBookmark: getBookmark
   }
 })
 

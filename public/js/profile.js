@@ -1,15 +1,23 @@
 angular.module('whiteboard.profile', [])
 // Set toolbar for colour palette and eraser. 
-.controller('ProfileCtrl', function($scope, $location, User) {
+.controller('ProfileCtrl', function($scope, $location, User, Board) {
   // TODO
   $scope.createBoard = function (name) {
-    $location.path('/new');
+    console.log('createBoard');
+    Board.createBoard(name)
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    // $location.path('/new');
   }
 
+  console.log('user', User);
   $scope.getTodos = function () {
     User.getTodos()
       .then(function (todos) {
-        console.log('hi?');
         $scope.todos = todos;
       })
       .catch(function (err) {
@@ -20,7 +28,6 @@ angular.module('whiteboard.profile', [])
   $scope.getBookmarks = function () {
     User.getBookmarks()
       .then(function (bookmarks) {
-        console.log(bookmarks);
         $scope.bookmarks = bookmarks;
       })
       .catch(function (err) {
@@ -31,7 +38,14 @@ angular.module('whiteboard.profile', [])
   $scope.getTodos();
   $scope.getBookmarks();
 
-  $scope.gotoBookmark = function (url) {
-    $location.path('/'+url);
+  $scope.getBookmark = function (url) {
+    User.getBookmark(url)
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    // $location.path('/'+url);
   }
 });

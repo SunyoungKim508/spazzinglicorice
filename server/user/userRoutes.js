@@ -7,6 +7,9 @@ module.exports = function (router) {
     .get(userController.getTodos)
     .post(userController.addTodo);
 
+  router.route('/bookmark/:url')
+    .get(userController.getBookmark);
+
   router.route('/bookmark')
     .get(userController.getBookmarks)
     .post(userController.addBookmark);
