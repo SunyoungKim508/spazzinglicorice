@@ -1,27 +1,39 @@
 angular.module('devslate.chatbox', [])
-
-.controller('ChatboxCtrl', function ($scope, Socket) {
-  // var ioRoom = window.location.href;
+// TODO: use socket from service
+.controller('ChatboxCtrl', function ($scope, User) {
   // all messages from users will be stored in texts array
   $scope.texts = [];
-  // scope.watch
+  $scope.list = '';
+  $scope.message = '';
 
   // using io instance(socket) by calling it ioRoom(namespace)
-  // var socket = io(ioRoom);
+  var ioRoom = window.location.href;
+  var socket = io(ioRoom);
+  console.log(socket);
   $scope.sendMessage = function (message, $event) {
     $event.preventDefault();
-    console.log('angular: '+ message);
-    Socket.socket.emit('chat message', message);
+    console.log(message);
+    socket.emit('chat message', message);
     $scope.message = '';
     return false;
-  };
+  }
 
-  Socket.socket.on('chat message', function (msg) {
-    console.log('socket'+ msg);
+  $scope.addTodo = function (list, $event) {
+    $event.preventDefault();
+    User.addTodo(list)
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    $scope.list = '';
+    return false;
+  }
+
+  socket.on('chat message', function (msg) {
+    console.log('socket from ' + msg);
     $scope.texts.push(msg);
-  });
-
-  $scope.$watch('texts', function () {
-    console.log('hi: texts');
-  });
-});
+    $scope.$apply();
+  });  
+})

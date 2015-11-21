@@ -38,7 +38,7 @@ angular.module('devslate', [
         }
       })
       .state('userpage', {
-        templateUrl: 'users/userpage.html',
+        templateUrl: 'app/user/userpage.html',
         controller: 'UserCtrl'
       });
       $urlRouterProvider.otherwise('/splash');
