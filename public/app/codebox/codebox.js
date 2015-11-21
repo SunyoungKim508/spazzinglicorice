@@ -15,7 +15,7 @@ angular.module('devslate.codebox', ['ui.codemirror'])
 
 
   $scope.send = function () {
-    api.emit('code-text', $scope.code);
+    Socket.socket.emit('code-text', $scope.code);
   };
 
   
