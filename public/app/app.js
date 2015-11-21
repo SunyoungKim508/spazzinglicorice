@@ -18,6 +18,7 @@ angular.module('devslate', [
         controller: 'SplashCtrl'
       })
       .state('board', {
+        url: '/board/:boardUrl',
         views: {
           'whiteboard': {
             templateUrl: 'app/whiteboard/whiteboard.html',
@@ -38,6 +39,7 @@ angular.module('devslate', [
         }
       })
       .state('userpage', {
+        url: '/user',
         templateUrl: 'app/user/userpage.html',
         controller: 'UserCtrl'
       });

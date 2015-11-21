@@ -12,10 +12,10 @@ var connect = function(boardUrl, board, io) {
 
   // Set the Socket.io namespace to the boardUrl.
   var whiteboard = io.of(boardUrl);
-
+  console.log('hey');
   whiteboard.once('connection', function(socket) {
     //require our separate modules - drawing, chat, etc...
-
+    console.log('are you working whiteboard?');
     require('./drawing/drawing.js')(socket, Board);
     require('./chatter/chatter.js')(socket, whiteboard);
 

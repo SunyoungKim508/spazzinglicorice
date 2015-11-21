@@ -132,7 +132,7 @@ app.use('/api/board', boardRouter);
 require('./server/user/userRoutes.js')(userRouter);
 require('./server/board/boardRoutes.js')(boardRouter, Board, io);
 
-app.get('/:url', isLoggedIn, function(req, res) {
+app.get('/5650c6587254774e9eb12304', isLoggedIn, function(req, res) {
   var url = req.params.url;
   Board.findById(req.params.url, function(err, board) {
     // If the board doesn't exist, or the route is invalid,
