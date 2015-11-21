@@ -21,11 +21,6 @@ angular.module('whiteboard.chat', [])
     console.log($scope.texts);
     $scope.$apply();
   });  
-
-  // $scope.$watch('texts', function () {
-  //   console.log('hi: texts');
-  // }, true);
-
 })
 
 // Set changePen method.
