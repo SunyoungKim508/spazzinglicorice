@@ -19,6 +19,7 @@
     "tests"
   ],
   "dependencies": {
-    "foundation": "~5.5.3"
+    "foundation": "~5.5.3",
+    "angular-ui-codemirror": "~0.3.0"
   }
 }
