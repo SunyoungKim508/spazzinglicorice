@@ -21,10 +21,21 @@ var connect = function(boardUrl, board, io) {
     console.log('work');
     require('./drawing/drawing.js')(socket, Board);
     socket.on('chat message', function (msg) {
-      console.log('are you working?')
+      console.log('are you working?');
       console.log('chatter' + msg);
       whiteboard.emit('chat message', msg);
     });
+
+    /**
+     *    Socket functions for codebox
+     *    don't fuck around
+     */
+    socket.on('code-text', function (msg) {
+          console.log('recieved: \n', msg);
+          socket.broadcast.emit('code-text', msg);
+    });
+
+    
     // require('./chatter/chatter.js')(socket, whiteboard);
 
     // Send the current state of the board to the client immediately on joining.
