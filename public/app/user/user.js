@@ -1,6 +1,11 @@
 angular.module('devslate.user', [])
 
 .controller('UserCtrl', function ($scope, $location, User, Board) {
+// Set toolbar for colour palette and eraser. 
+  $scope.todos = [];
+  $scope.bookmarks = [];
+
+  // TODO
   $scope.createBoard = function (name) {
     console.log('createBoard');
     Board.createBoard(name)
@@ -45,6 +50,5 @@ angular.module('devslate.user', [])
       .catch(function (err) {
         console.log(err);
       });
-    // $location.path('/'+url);
   };
 });

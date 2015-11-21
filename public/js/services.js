@@ -40,8 +40,6 @@ angular.module('whiteboard.services', [])
       url: 'http://localhost:8080/api/user/todo'
     }).then(function (res) {
       // return todos list(Array)
-      console.log('please get Todos');
-      console.log(res);
       return res.data;
     });
   };
@@ -80,18 +78,12 @@ angular.module('whiteboard.services', [])
   var getBookmark = function (bookmarkUrl) {
     return $http({
       method: 'GET',
-      url: 'http://localhost:8080/api/user/bookmark/' + bookmarkUrl
+      url: 'http://localhost:8080/' + bookmarkUrl
     }).then(function (res) {
       // return bookmarks list(Array)
       console.log(res);
       return res.data;
     });
-  };
-
-
-
-  var getAllUser = function () {
-
   };
 
   return {

@@ -5,13 +5,12 @@ var User = require('../../db/user.js');
 module.exports = {
   createBoard: function (req, res, next) {
     // TODO: session - user
-    var user = "Sunyoung";
     var boardname = req.body.name;
     var board = new Board({strokes: [], name: boardname});
 
-    User.findOne({firstName: user}).exec(function (err, user) {
+    User.findOne({facebookId: '1504780126484565'}).exec(function (err, user) {
       if (user) {
-        
+
         user.bookmarks.push({name: boardname, url: board._id.toString()});
         user.save(function (err, user) {
           if (err) {console.log('err!')};

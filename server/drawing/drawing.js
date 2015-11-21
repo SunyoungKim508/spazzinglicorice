@@ -32,7 +32,7 @@ var drawing = function(socket, Board) {
     var id = socket.nsp.name.slice(1);
 
     //Update the board with the new stroke.
-    Board.update({id: id},{$push: {strokes: finishedStroke} },{upsert:true},function(err, board){
+    Board.findByIdAndUpdate(id, {$push: {strokes: finishedStroke} },{upsert:true},function(err, board){
       if(err){ console.log(err); }
       else {
         console.log("Successfully added");
