@@ -1,24 +1,36 @@
 angular.module('whiteboard.chat', [])
 // Set toolbar for colour palette and eraser. 
-.controller('ChatCtrl', function($scope) {
+.controller('ChatCtrl', function($scope, User) {
   var ioRoom = window.location.href;
   // all messages from users will be stored in texts array
   $scope.texts = [];
-  
+  $scope.list = '';
+  $scope.message = '';
+
   // using io instance(socket) by calling it ioRoom(namespace)
   var socket = io(ioRoom);
   $scope.sendMessage = function (message, $event) {
     $event.preventDefault();
-    console.log('angular: '+ message);
     socket.emit('chat message', message);
     $scope.message = '';
     return false;
   }
 
+  $scope.addTodo = function (list, $event) {
+    $event.preventDefault();
+    User.addTodo(list)
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    $scope.list = '';
+    return false;
+  }
+
   socket.on('chat message', function (msg) {
-    console.log('socket: '+ msg);
     $scope.texts.push(msg);
-    console.log($scope.texts);
     $scope.$apply();
   });  
 })

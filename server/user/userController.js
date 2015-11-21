@@ -18,8 +18,8 @@ module.exports = {
   // user from the session
   addTodo: function (req, res) {
     var findUser = Q.nbind(User.findOne, User);
-
-    findUser({firstName: user})
+    var todo = req.body.todo;
+    findUser({firstName: "Sunyoung"})
       .then(function (user) {
         user.todos.push(todo);
         user.save(function (err, user) {

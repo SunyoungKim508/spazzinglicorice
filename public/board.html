@@ -10,12 +10,13 @@
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messagebox { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      #messagebox input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      #messagebox button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
+      #todo {position:absolute; top:50px;}
     </style>
   </head>
   <body>
@@ -58,10 +59,13 @@
       </div>    
   </div>
   <div ng-controller="ChatCtrl">
+    <form action="" id="todo" ng-submit="addTodo(list, $event)">
+      <input type="text" placeholder="Add your todolist" ng-model="list"><button>Add</button>
+    </form>
     <ul id="messages">
       <li ng-repeat="text in texts"><span></span>{{text}}<li>
     </ul>
-    <form action="" ng-submit="sendMessage(message, $event)">
+    <form id="messagebox" action="" ng-submit="sendMessage(message, $event)">
       <input id="m" ng-model="message" autocomplete="off"/><button>Send</button>
     </form>
   </div>
