@@ -23,17 +23,17 @@ angular.module('devslate.services', [])
 .factory('Board', function ($http, Socket) {
 
   // var canvas;
-  var webrtc;
+  // var webrtc;
   var otherUserActive = false;
   var stroke = [];
   var prevPixel = [];
-  var mouse;
-  var pen;
-  var draw;
-  var initializeMouseDown;
+  // var mouse;
+  // var pen;
+  // var draw;
+  // var initializeMouseDown;
 
   var initialize = function (canvasElement, webrtcElements) {
-    webrtc = new SimpleWebRTC({
+    var webrtc = new SimpleWebRTC({
       localVideoEl: webrtcElements.local,
       remoteVideosEl: webrtcElements.remote,
       autoRequestMedia: true
@@ -44,30 +44,31 @@ angular.module('devslate.services', [])
     });
 
     var canvas = canvasElement;
+    console.log('canvas inside Board: ', canvas);
     canvas[0].width = window.innerWidth;
     canvas[0].height = window.innerHeight * 0.7;
     var context = canvas[0].getContext("2d");
 
-    mouse = {
+    var mouse = {
       click: false,
       drag: false,
       x: 0,
       y: 0
     };
 
-    pen = {
+    var pen = {
       fillStyle: 'solid',
       strokeStyle: 'black',
       lineWidth: 5,
       lineCap: 'round'
     };
 
-    draw = function (x, y) {
+    var draw = function (x, y) {
       context.lineTo(x, y);
       context.stroke();
     };
 
-    initializeMouseDown = function (pen, moveToX, moveToY) {
+    var initializeMouseDown = function (pen, moveToX, moveToY) {
       // Copy over current pen properties (e.g. fillStyle).
       for (var key in pen) {
         context[key] = pen[key];
@@ -99,7 +100,6 @@ angular.module('devslate.services', [])
           }
         }
       }
-      return canvas;
     });
 
     // If another user is drawing, App.socket will receive a 'drag' event. App listens for the drag event and renders the drawing element created by the other user.
@@ -128,9 +128,16 @@ angular.module('devslate.services', [])
       context.closePath();
       otherUserActive = false;
     });
+    console.log('about to return from Board.initialize');
+    return {
+      webrtc: webrtc,
+      canvas: canvas,
+      mouse: mouse,
+      pen: pen,
+      draw: draw,
+      initializeMouseDown: initializeMouseDown
+    };
   };
-
-
 
   var newBoard = function () {
     console.log('called board.newBoard');
@@ -140,30 +147,37 @@ angular.module('devslate.services', [])
       data: {}
     })
     .then(function (resp) {
-      //if we change the new route to do something, uncomment this
-      //return resp.data;
+      return resp.data;
     });
   };
 
   return {
     initialize: initialize,
     newBoard: newBoard,
-    webrtc: webrtc,
     otherUserActive: otherUserActive,
-    mouse: mouse,
-    initializeMouseDown: initializeMouseDown,
     stroke: stroke,
-    pen: pen,
-    draw: draw
   };
 
 })
 
 .factory('Socket', function () {
-  var ioRoom = window.location.href;
-  var socket = io(ioRoom);
+  // var ioRoom = window.location.href;
+  // console.log('ioRoom inside Socket: ', ioRoom);
+  // var socket = io(ioRoom);
+  var ioRoom;
+  var socket;
 
+  var setSocket = function (namespace) {
+    // ioRoom = window.location.href;
+    // console.log('ioRoom inside Socket: ', ioRoom);
+    socket = io(namespace);
+  };
+
+  var getSocket = function () {
+    return socket;
+  };
   return {
+    setSocket: setSocket,
     socket: socket,
     ioRoom: ioRoom
   };
