@@ -54,8 +54,9 @@ h1 {
 }
 
 
-.whiteboard.container { 
+.whiteboard.container {
   background-color: #fff;
+  border: 5px solid black;
   /*position: relative;*/
 /*  margin: 10% 10%;
   left: 30px;
@@ -305,8 +306,3 @@ label[for=blue] {
 .palette #blue:not(:checked) + label:after {
   background: darkblue;
 }
-
-
-
-
-

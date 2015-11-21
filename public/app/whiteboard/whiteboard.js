@@ -1,92 +1,133 @@
 angular.module('devslate.whiteboard', [])
 
 .controller('WhiteboardCtrl', function ($scope, Board, Socket) {
+  var boardObj;
 
-  // $scope.initBoard = function () {
-  //   var canvasElement = angular.element('#whiteboard');
-  //   console.log('canvaselement: ', canvasElement);
+  Board.newBoard()
+  .then(function (namespace) {
+    Socket.set(namespace);
+  });
 
-  //   var webrtcElements = {
-  //     local: angular.element('#localVideo'),
-  //     remote: angular.element('#remoteVideos')
-  //   };
-  //   var b = Board.initialize(canvasElement, webrtcElements);
-  // };
-  // $scope.initBoard();
+  $scope.initBoard = function () {
+    var canvasElement = angular.element('#whiteboard');
+    console.log('canvaselement: ', canvasElement);
 
-  // $('#localVideo').draggable();
-  // $('#remoteVideos').draggable();
+    var webrtcElements = {
+      local: angular.element('#localVideo'),
+      remote: angular.element('#remoteVideos')
+    };
+    console.log('before returning Board.initialize');
+    boardObj = Board.initialize(canvasElement, webrtcElements);
+  };
+  $scope.initBoard();
 
-  // console.log('board: ', Board);
+  $('#localVideo').draggable();
+  $('#remoteVideos').draggable();
+})
 
-  // b.on('mousedown', function (e) {
+.directive("drawing", function () {
+  return {
+    restrict: "A",
+    link: function (scope, element) {
+      var context = element[0].getContext('2d');
 
-  //   if (!Board.otherUserActive) {
-  //     console.log('User has started to draw.');
+      var otherUserActive = false;
+      var stroke = [];
+      var prevPixel = [];
 
-  //     //initialize mouse position.
-  //     Board.mouse.click = true;
-  //     Board.mouse.x = e.offsetX;
-  //     Board.mouse.y = e.offsetY;
+      var mouse = {
+        click: false,
+        drag: false,
+        x: 0,
+        y: 0
+      };
 
-  //     Board.initializeMouseDown(Board.pen, Board.mouse.x, Board.mouse.y);
+      var pen = {
+        fillStyle: 'solid',
+        strokeStyle: 'black',
+        lineWidth: 5,
+        lineCap: 'round'
+      };
 
-  //     //Emit the pen object through socket
-  //     Board.socket.emit('start', Board.pen);
+      var draw = function (x, y) {
+        context.lineTo(x, y);
+        context.stroke();
+      };
 
-  //     //Add the first mouse coordinates to the stroke array for storage
-  //     Board.stroke.push([Board.mouse.x, Board.mouse.y]);
-  //   } else {
-  //     console.log('Another user is drawing - please wait.');
-  //   }
-  // });
+      var initializeMouseDown = function (pen, moveToX, moveToY) {
+        // Copy over current pen properties (e.g. fillStyle).
+        for (var key in pen) {
+          context[key] = pen[key];
+        }
 
-  // b.on('drag', function (e) {
+        // Begin draw.
+        context.beginPath();
+        context.moveTo(moveToX, moveToY);
+      };
 
-  //   if (!Board.otherUserActive) {
-  //     if (Board.mouse.click) {
-  //       Board.mouse.drag = true;
+      element.bind('mousedown', function (event) {
+        if (!otherUserActive) {
+          console.log("User has started to draw.");
 
-  //       //Find x,y coordinates of the mouse dragging on the canvas.
-  //       var x = e.offsetX;
-  //       var y = e.offsetY;
+          mouse.click = true;
+          mouse.x = event.offsetX;
+          mouse.y = event.offsetY;
 
-  //       //render the drawing
-  //       Board.draw(x, y);
-  //       console.log("currently drawing coordinates", [x, y]);
+          initializeMouseDown(pen, mouse.x, mouse.y);
 
-  //       //continue to push coordinates to stroke array (as part of storage)
-  //       Board.stroke.push([x, y]);
+          //Emit the pen object through socket
+          Socket.emit('start', pen);
 
-  //       Socket.socket.emit('drag', [x, y]);
-  //     }
-  //   } else {
-  //     console.log('Another use is drawing - please wait');
-  //   }
-  // });
+          //Add the first mouse coordinates to the stroke array for storage
+          stroke.push([mouse.x, mouse.y]);
+        } else {
+          console.log('Another user is drawing - please wait.');
+        }
+      });
 
-  // //On mouse dragend detection, tell socket that we have finished drawing
-  // Board.canvas.on('dragend', function (e) {
-  //   if (!otherUserActive) {
-  //     Board.mouse.drag = false;
-  //     Board.mouse.click = false;
+      element.bind('drag', function (event) {
+        if (!otherUserActive) {
+          if (mouse.click) {
+            mouse.drag = true;
 
-  //     console.log('Drawing is finished and its data is being pushed to the server', [Board.stroke, Board.pen]);
+            //Find x,y coordinates of the mouse dragging on the canvas.
+            var x = event.offsetX;
+            var y = event.offsetY;
 
-  //     //Empty the stroke array.
-  //     Board.stroke = [];
+            //render the drawing
+            draw(x, y);
+            console.log('currently drawing coordinates', [x, y]);
 
-  //     //Tell socket that we've finished sending data
-  //     Board.socket.emit('end', null);
+            //continue to push coordinates to stroke array (as part of storage)
+            stroke.push([x, y]);
 
-  //   } else {
-  //     console.log('Another user is drawing - please wait');
-  //   }
-  // });
+            Socket.emit('drag', [x, y]);
+          }
+        } else {
+          console.log('Another user is drawing- please wait');
+        }
+      });
 
-  // Board.canvas.on('mouseleave', function (e) {
-  //   Board.canvas.trigger('dragend');
-  // });
+      element.bind('dragend', function (event) {
+        if (!otherUserActive) {
+          mouse.drag = false;
+          mouse.click = false;
 
+          console.log('Drawing is finished and its data being pushed to server', [stroke, pen]);
 
+          //Empty the stroke array.
+          stroke = [];
+
+          //Tell socket that we've finished sending data
+          Socket.emit('end', null);
+        } else {
+          console.log("Another user is drawing - please wait");
+        }
+      });
+
+      element.on('mouseleave', function (event) {
+        element.trigger('dragend');
+      });
+    }
+  };
 });
