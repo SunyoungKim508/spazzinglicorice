@@ -46,6 +46,9 @@ app.use(passport.session()); // persistent login sessions
 
 // ## Routes
 // **Static folder for serving application assets**
+app.get('/profile', function (req, res) {
+  res.sendFile(__dirname + '/public/profile.html');
+});
 app.use('/', express.static(__dirname + '/public'));
 
 // **Static folder for serving documentation**

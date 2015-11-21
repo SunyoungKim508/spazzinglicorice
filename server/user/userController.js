@@ -1,14 +1,13 @@
 // userController.js
 var User = require('../../db/user.js');
 var Q = require('q');
-
 module.exports = {
-  getTodos: function () {
-    var findAll = Q.nbind(Link.find, Link);
-
-    findAll({})
-      .then(function (todos) {
-        res.json(todos);
+  getTodos: function (req, res) {
+    var findTodos = Q.nbind(User.findOne, User);
+    console.log('server:getTodos');
+    findTodos({firstName: 'Sunyoung'})
+      .then(function (user) {
+        res.json(user.todos);
       })
       .fail(function (error) {
         next(error);
@@ -16,27 +15,53 @@ module.exports = {
   },
 
   // need user to add todo
-  addTodo: function (todo) {
-    
-  },
+  // user from the session
+  addTodo: function (req, res) {
+    var findUser = Q.nbind(User.findOne, User);
 
-  getBookmarks: function () {
-    var findAll = Q.nbind(Link.find, Link);
-
-    findAll({})
-      .then(function (bookmarks) {
-        res.json(bookmarks);
+    findUser({firstName: user})
+      .then(function (user) {
+        user.todos.push(todo);
+        user.save(function (err, user) {
+          res.json(todo);
+        });
       })
       .fail(function (error) {
         next(error);
       });
   },
 
-  addBookmark: function (bookmark) {
-
+  getBookmarks: function (req, res) {
+    var findBookmarks = Q.nbind(User.findOne, User);
+    console.log('server:getBookmarks');
+    findBookmarks({firstName: 'Sunyoung'})
+      .then(function (user) {
+        res.json(user.bookmarks);
+      })
+      .fail(function (error) {
+        next(error);
+      });
   },
 
-  getUser: function () {
+  getBookmark: function (req, res) {
+    var url = req.params.url;
+    res.redirect('/' + url);
+  },
 
+  addBookmark: function (req, res) {
+    var findUser = Q.nbind(User.findOne, User);
+
+    findUser({firstName: user})
+      .then(function (user) {
+        user.bookmarks.push(bookmark);
+        user.save(function (err, user) {
+          res.json(bookmark);
+        });
+      })
+      .fail(function (error) {
+        next(error);
+      });
+  },
+  getUser: function () {
   }
 }

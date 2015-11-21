@@ -4,12 +4,12 @@
 
 // Initialize the whiteboard module.
 
-angular.module('whiteboard', ['whiteboard.chat', 'whiteboard.services', 'whiteboard.profile', 'ui.router'])
+angular.module('whiteboard', ['whiteboard.services','whiteboard.chat', 'whiteboard.profile', 'ui.router'])
   .config(function($stateProvider) {
     $stateProvider
       .state('eraser', {
         controller: 'toolbar'
-      });
+      })
   })
   // Set App to the root scope. 
   .controller('canvas', function($rootScope, $scope, tools) {

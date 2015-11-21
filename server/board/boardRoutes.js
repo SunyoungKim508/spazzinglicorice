@@ -6,4 +6,6 @@ module.exports = function (router) {
 
   router
     .post('/', boardController.createBoard);
+
+  router.get('/:url', boardController.gotoBoard);
 };

@@ -1,28 +1,51 @@
 angular.module('whiteboard.profile', [])
 // Set toolbar for colour palette and eraser. 
-.controller('ProfileCtrl', function($scope, $location, User) {
+.controller('ProfileCtrl', function($scope, $location, User, Board) {
   // TODO
   $scope.createBoard = function (name) {
-    $location.path('/new');
+    console.log('createBoard');
+    Board.createBoard(name)
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    // $location.path('/new');
   }
 
-  User.getTodos()
-    .then(function (todos) {
-      $scope.todos = todos;
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+  console.log('user', User);
+  $scope.getTodos = function () {
+    User.getTodos()
+      .then(function (todos) {
+        $scope.todos = todos;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }
 
-  User.getBookmarks()
-    .then(function (bookmarks) {
-      $scope.bookmarks = bookmarks;
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+  $scope.getBookmarks = function () {
+    User.getBookmarks()
+      .then(function (bookmarks) {
+        $scope.bookmarks = bookmarks;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });    
+  }
 
-  $scope.gotoBookmark = function (url) {
-    $location.path('/'+url);
+  $scope.getTodos();
+  $scope.getBookmarks();
+
+  $scope.getBookmark = function (url) {
+    User.getBookmark(url)
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    // $location.path('/'+url);
   }
 });
