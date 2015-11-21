@@ -5,7 +5,7 @@ module.exports = {
   getTodos: function (req, res) {
     var findTodos = Q.nbind(User.findOne, User);
     console.log('server:getTodos');
-    findTodos({firstName: 'Sunyoung'})
+    findTodos({facebookId: '1504780126484565'})
       .then(function (user) {
         res.json(user.todos);
       })
@@ -18,8 +18,8 @@ module.exports = {
   // user from the session
   addTodo: function (req, res) {
     var findUser = Q.nbind(User.findOne, User);
-
-    findUser({firstName: user})
+    var todo = req.body.todo;
+    findUser({facebookId: '1504780126484565'})
       .then(function (user) {
         user.todos.push(todo);
         user.save(function (err, user) {
@@ -34,7 +34,7 @@ module.exports = {
   getBookmarks: function (req, res) {
     var findBookmarks = Q.nbind(User.findOne, User);
     console.log('server:getBookmarks');
-    findBookmarks({firstName: 'Sunyoung'})
+    findBookmarks({facebookId: '1504780126484565'})
       .then(function (user) {
         res.json(user.bookmarks);
       })
@@ -45,13 +45,14 @@ module.exports = {
 
   getBookmark: function (req, res) {
     var url = req.params.url;
+    console.log('working?');
     res.redirect('/' + url);
   },
 
   addBookmark: function (req, res) {
     var findUser = Q.nbind(User.findOne, User);
 
-    findUser({firstName: user})
+    findUser({facebookId: '1504780126484565'})
       .then(function (user) {
         user.bookmarks.push(bookmark);
         user.save(function (err, user) {

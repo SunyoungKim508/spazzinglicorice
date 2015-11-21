@@ -1,7 +1,6 @@
-angular.module('devslate.user', [])
-
-.controller('UserCtrl', function ($scope, $location, User, Board) {
+angular.module('whiteboard.profile', [])
 // Set toolbar for colour palette and eraser. 
+.controller('ProfileCtrl', function($scope, $rootScope, $location, User, Board) {
   $scope.todos = [];
   $scope.bookmarks = [];
 
@@ -16,7 +15,7 @@ angular.module('devslate.user', [])
         console.log(err);
       });
     // $location.path('/new');
-  };
+  }
 
   console.log('user', User);
   $scope.getTodos = function () {
@@ -27,7 +26,7 @@ angular.module('devslate.user', [])
       .catch(function (err) {
         console.log(err);
       });
-  };
+  }
 
   $scope.getBookmarks = function () {
     User.getBookmarks()
@@ -36,8 +35,8 @@ angular.module('devslate.user', [])
       })
       .catch(function (err) {
         console.log(err);
-      });
-  };
+      });    
+  }
 
   $scope.getTodos();
   $scope.getBookmarks();
@@ -50,5 +49,5 @@ angular.module('devslate.user', [])
       .catch(function (err) {
         console.log(err);
       });
-  };
+  }
 });

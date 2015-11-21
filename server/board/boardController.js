@@ -5,19 +5,19 @@ var User = require('../../db/user.js');
 module.exports = {
   createBoard: function (req, res, next) {
     // TODO: session - user
-    var user = "Sunyoung";
-    console.log(req.body);
     var boardname = req.body.name;
     var board = new Board({strokes: [], name: boardname});
 
-    User.findOne({firstName: user}).exec(function (err, user) {
+    User.findOne({facebookId: '1504780126484565'}).exec(function (err, user) {
       if (user) {
+
         user.bookmarks.push({name: boardname, url: board._id.toString()});
         user.save(function (err, user) {
           if (err) {console.log('err!')};
           board.save(function(err, board) {
             if (err) { console.error(err); }
             else {
+              res.redirect('/' + board._id);
               console.log('board saved!');
             }
           });          
@@ -29,9 +29,6 @@ module.exports = {
         next(err);
       }
     });
-    // Redirect to the new board.
-    console.log(board._id);
-    res.redirect('/' + board._id);
   },
 
   gotoBoard: function (req, res) {

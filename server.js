@@ -43,12 +43,9 @@ app.use(passport.session()); // persistent login sessions
 // require('./app/routes.js')(app, passport);
 
 //////////////////////////////////////////////////////////////////////////
-
+ 
 // ## Routes
 // **Static folder for serving application assets**
-app.get('/profile', function (req, res) {
-  res.sendFile(__dirname + '/public/profile.html');
-});
 app.use('/', express.static(__dirname + '/public'));
 
 // **Static folder for serving documentation**
@@ -85,22 +82,22 @@ app.get('/new', function(req, res) {
 
 //TODO: Need this to be acutally routed --> COMMENTED OUT ORIGIONAL BELOW
 ////////////////////////////////////////////////////////////////////////////////////////////////
-app.get('/564eca8fe594c70300b6380b', isLoggedIn, function(req, res) {
-  var id = req.url.slice(1);
-  Board.findOne({id: id}, function(err, board) {
-    // If the board doesn't exist, or the route is invalid,
-    // then redirect to the home page.
-    if (err) {
-      res.redirect('/');
-    } else {
-      // Invoke [request handler](../documentation/sockets.html) for a new socket connection
-      // with board id as the Socket.io namespace.
-      handleSocket(req.url, board, io);
-      // Send back whiteboard html template.
-      res.sendFile(__dirname + '/public/board.html');
-    }
-  });
-});
+// app.get('/564eca8fe594c70300b6380b', isLoggedIn, function(req, res) {
+//   var id = req.url.slice(1);
+//   Board.findOne({id: id}, function(err, board) {
+//     // If the board doesn't exist, or the route is invalid,
+//     // then redirect to the home page.
+//     if (err) {
+//       res.redirect('/');
+//     } else {
+//       // Invoke [request handler](../documentation/sockets.html) for a new socket connection
+//       // with board id as the Socket.io namespace.
+//       handleSocket(req.url, board, io);
+//       // Send back whiteboard html template.
+//       res.sendFile(__dirname + '/public/board.html');
+//     }
+//   });
+// });
 
 ///////////////////// FACEBOOK ROUTES //////////////////////////////////////////
 
@@ -133,8 +130,26 @@ var boardRouter = express.Router();
 app.use('/api/user', userRouter);
 app.use('/api/board', boardRouter);
 require('./server/user/userRoutes.js')(userRouter);
-require('./server/board/boardRoutes.js')(boardRouter);
+require('./server/board/boardRoutes.js')(boardRouter, Board, io);
 
+app.get('/5650c6587254774e9eb12304', isLoggedIn, function(req, res) {
+  var url = req.params.url;
+  Board.findById(req.params.url, function(err, board) {
+    // If the board doesn't exist, or the route is invalid,
+    // then redirect to the home page.
+    if (err) {
+      res.redirect('/');
+    } else {
+      // Invoke [request handler](../documentation/sockets.html) for a new socket connection
+      // with board id as the Socket.io namespace.
+      console.log(board);
+      handleSocket(req.params.url, board, io);
+      // Send back whiteboard html template.
+      // console.log(path.join(__dirname, '../..', 'public/board.html'));
+      res.sendFile(__dirname + '/public/board.html');
+    }
+  });
+});
 // **Start the server.**
 http.listen(port, function() {
   console.log('The magic is happening on ', port, 'at', new Date());

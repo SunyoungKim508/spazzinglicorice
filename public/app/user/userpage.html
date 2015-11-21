@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<div ng-app='whiteboard'>
-  <div ng-controller="ProfileCtrl">
-    <div class="profile">
-      <ul>
-        <li ng-repeat="bookmark in bookmarks">{{bookmark.name}}
-          <button ng-click="getBookmark(bookmark.url)">Go to Board</button>
-        </li>
-      </ul>
-    </div>
-    <div class="todo">
-      <ul>
-        <li ng-repeat="todo in todos">{{todo}}</li>
-      </ul>
-    </div>
+<div id="user">
+  <div class="bookmarks">
+    <ul>
+      <li ng-repeat="bookmark in bookmarks">{{bookmark.name}}
+        <a ng-href="{{bookmark.url}}">Go to bookmark</a>
+        <button ng-click="getBookmark(bookmark.url)">Go to Board</button>
+      </li>
+    </ul>
+  </div>
+  <div class="todo">
     <input type="text" ng-model="bookmarkedboard">
     <button ng-click="createBoard(bookmarkedboard)">New Board</button>
+    <ul>
+      <li ng-repeat="todo in todos">{{todo}}</li>
+    </ul>
   </div>
+  <input type="text" ng-model="bookmarkedboard">
+  <button ng-click="createBoard(bookmarkedboard)">New Board</button>
 </div>
