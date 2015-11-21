@@ -1,92 +1,101 @@
 angular.module('devslate.whiteboard', [])
 
 .controller('WhiteboardCtrl', function ($scope, Board, Socket) {
+  var boardObj;
 
-  // $scope.initBoard = function () {
-  //   var canvasElement = angular.element('#whiteboard');
-  //   console.log('canvaselement: ', canvasElement);
+  Board.newBoard()
+  .then(function (namespace) {
+    Socket.setSocket(namespace);
+  });
 
-  //   var webrtcElements = {
-  //     local: angular.element('#localVideo'),
-  //     remote: angular.element('#remoteVideos')
-  //   };
-  //   var b = Board.initialize(canvasElement, webrtcElements);
-  // };
-  // $scope.initBoard();
+  $scope.initBoard = function () {
+    var canvasElement = angular.element('#whiteboard');
+    console.log('canvaselement: ', canvasElement);
 
-  // $('#localVideo').draggable();
-  // $('#remoteVideos').draggable();
+    var webrtcElements = {
+      local: angular.element('#localVideo'),
+      remote: angular.element('#remoteVideos')
+    };
+    console.log('before returning Board.initialize');
+    boardObj = Board.initialize(canvasElement, webrtcElements);
+  };
+  $scope.initBoard();
 
-  // console.log('board: ', Board);
+  console.log('boardObj: ', boardObj);
 
-  // b.on('mousedown', function (e) {
+  $('#localVideo').draggable();
+  $('#remoteVideos').draggable();
 
-  //   if (!Board.otherUserActive) {
-  //     console.log('User has started to draw.');
+  console.log('board: ', Board);
 
-  //     //initialize mouse position.
-  //     Board.mouse.click = true;
-  //     Board.mouse.x = e.offsetX;
-  //     Board.mouse.y = e.offsetY;
+  boardObj.canvas.on('mousedown', function (e) {
 
-  //     Board.initializeMouseDown(Board.pen, Board.mouse.x, Board.mouse.y);
+    if (!Board.otherUserActive) {
+      console.log('User has started to draw.');
 
-  //     //Emit the pen object through socket
-  //     Board.socket.emit('start', Board.pen);
+      //initialize mouse position.
+      boardObj.mouse.click = true;
+      boardObj.mouse.x = e.offsetX;
+      boardObj.mouse.y = e.offsetY;
 
-  //     //Add the first mouse coordinates to the stroke array for storage
-  //     Board.stroke.push([Board.mouse.x, Board.mouse.y]);
-  //   } else {
-  //     console.log('Another user is drawing - please wait.');
-  //   }
-  // });
+      boardObj.initializeMouseDown(boardObj.pen, boardObj.mouse.x, boardObj.mouse.y);
 
-  // b.on('drag', function (e) {
+      //Emit the pen object through socket
+      Socket.socket.emit('start', boardObj.pen);
 
-  //   if (!Board.otherUserActive) {
-  //     if (Board.mouse.click) {
-  //       Board.mouse.drag = true;
+      //Add the first mouse coordinates to the stroke array for storage
+      Board.stroke.push([boardObj.mouse.x, boardObj.mouse.y]);
+    } else {
+      console.log('Another user is drawing - please wait.');
+    }
+  });
 
-  //       //Find x,y coordinates of the mouse dragging on the canvas.
-  //       var x = e.offsetX;
-  //       var y = e.offsetY;
+  boardObj.canvas.on('drag', function (e) {
 
-  //       //render the drawing
-  //       Board.draw(x, y);
-  //       console.log("currently drawing coordinates", [x, y]);
+    if (!Board.otherUserActive) {
+      if (boardObj.mouse.click) {
+        boardObj.mouse.drag = true;
 
-  //       //continue to push coordinates to stroke array (as part of storage)
-  //       Board.stroke.push([x, y]);
+        //Find x,y coordinates of the mouse dragging on the canvas.
+        var x = e.offsetX;
+        var y = e.offsetY;
 
-  //       Socket.socket.emit('drag', [x, y]);
-  //     }
-  //   } else {
-  //     console.log('Another use is drawing - please wait');
-  //   }
-  // });
+        //render the drawing
+        boardObj.draw(x, y);
+        console.log("currently drawing coordinates", [x, y]);
 
-  // //On mouse dragend detection, tell socket that we have finished drawing
-  // Board.canvas.on('dragend', function (e) {
-  //   if (!otherUserActive) {
-  //     Board.mouse.drag = false;
-  //     Board.mouse.click = false;
+        //continue to push coordinates to stroke array (as part of storage)
+        Board.stroke.push([x, y]);
 
-  //     console.log('Drawing is finished and its data is being pushed to the server', [Board.stroke, Board.pen]);
+        Socket.socket.emit('drag', [x, y]);
+      }
+    } else {
+      console.log('Another use is drawing - please wait');
+    }
+  });
 
-  //     //Empty the stroke array.
-  //     Board.stroke = [];
+  //On mouse dragend detection, tell socket that we have finished drawing
+  boardObj.canvas.on('dragend', function (e) {
+    if (!Board.otherUserActive) {
+      boardObj.mouse.drag = false;
+      boardObj.mouse.click = false;
 
-  //     //Tell socket that we've finished sending data
-  //     Board.socket.emit('end', null);
+      console.log('Drawing is finished and its data is being pushed to the server', [Board.stroke, boardObj.pen]);
 
-  //   } else {
-  //     console.log('Another user is drawing - please wait');
-  //   }
-  // });
+      //Empty the stroke array.
+      Board.stroke = [];
 
-  // Board.canvas.on('mouseleave', function (e) {
-  //   Board.canvas.trigger('dragend');
-  // });
+      //Tell socket that we've finished sending data
+      Socket.socket.emit('end', null);
+
+    } else {
+      console.log('Another user is drawing - please wait');
+    }
+  });
+
+  boardObj.canvas.on('mouseleave', function (e) {
+    boardObj.canvas.trigger('dragend');
+  });
 
 
 });
