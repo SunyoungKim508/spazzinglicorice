@@ -111,18 +111,25 @@ angular.module('devslate.services', [])
     });
   };
 
-var connectBoard = function (id) {
-  return $http({
-    method: 'GET',
-    url: '/board/' + id,
-    data: {}
-  })
-  .then(function (resp) {
-    console.log('data: ', resp.data);
-    return resp.data;
-  });
-};
-
+  var connectBoard = function (id) {
+    return $http({
+      method: 'GET',
+      url: '/board/' + id,
+      data: {}
+    })
+    .then(function (resp) {
+      console.log('data: ', resp.data);
+      return resp.data;
+    });
+  };
+//   //
+//   // // var getBoard = function () {
+//   // //   return $http({
+//   // //     method: 'GET',
+//   // //     url:
+//   // //   })
+//   // // }
+//   //
   return {
     // initialize: initialize,
     newBoard: newBoard,
@@ -130,19 +137,41 @@ var connectBoard = function (id) {
     // otherUserActive: otherUserActive,
     // stroke: stroke,
   };
+//
 })
 
+// .factory('Socket', function () {
+//   // var ioRoom = window.location.href;
+//   // console.log('ioRoom inside Socket: ', ioRoom);
+//   // var socket = io(ioRoom);
+//   var ioRoom;
+//   var socket;
+//
+//   var setSocket = function (namespace) {
+//     // ioRoom = window.location.href;
+//     // console.log('ioRoom inside Socket: ', ioRoom);
+//     socket = io(namespace);
+//   };
+//
+//   var getSocket = function () {
+//     return socket;
+//   };
+//   return {
+//     setSocket: setSocket,
+//     socket: socket,
+//     ioRoom: ioRoom
+//   };
+// })
+
 .factory('Socket', function ($rootScope) {
-  var socket = io;
+  var socket = io.connect();
 
   return {
     set: function (ioRoom) {
-      socket = io.connect('http://localhost:8080/' + ioRoom);
+      socket = io('http://localhost:8080/' + ioRoom);
       console.log('set socket to: ', ioRoom);
-      console.log('socket: ', socket);
     },
     on: function (eventName, callback) {
-      console.log('set socket listener: ', eventName);
       socket.on(eventName, function () {
         var args = arguments;
         $rootScope.$apply(function () {
