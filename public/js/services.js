@@ -7,7 +7,7 @@ angular.module('whiteboard.services', [])
   //   sendMessages: sendMessages
   // }
 })
-.factory('Board', function () {
+.factory('Board', function ($http) {
 
   var createBoard = function (name) {
     return $http({
@@ -21,7 +21,7 @@ angular.module('whiteboard.services', [])
     createBoard: createBoard
   }
 })
-.factory('User', function () {
+.factory('User', function ($http) {
   var getUser = function () {
     return $http({
       method: 'GET',
@@ -38,6 +38,7 @@ angular.module('whiteboard.services', [])
       url: 'http://localhost:8080/api/user/todo'
     }).then(function (res) {
       // return todos list(Array)
+      console.log(res);
       return res.data;
     });
   };
@@ -56,6 +57,7 @@ angular.module('whiteboard.services', [])
       url: 'http://localhost:8080/api/user/bookmark'
     }).then(function (res) {
       // return bookmarks list(Array)
+      console.log(res);
       return res.data;
     });
   };
@@ -75,9 +77,10 @@ angular.module('whiteboard.services', [])
 
   return {
     addTodo: addTodo,
-    getTodo: getTodos,
+    getTodos: getTodos,
     addBookmark: addBookmark,
-    getBookmarks: getBookmarks
+    getBookmarks: getBookmarks,
+    getUser: getUser
   }
 })
 

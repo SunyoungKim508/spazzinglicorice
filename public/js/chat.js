@@ -1,6 +1,6 @@
 angular.module('whiteboard.chat', [])
 // Set toolbar for colour palette and eraser. 
-.controller('ChatCtrl', function($scope, $element) {
+.controller('ChatCtrl', function($scope) {
   var ioRoom = window.location.href;
   // all messages from users will be stored in texts array
   $scope.texts = [];
@@ -17,7 +17,12 @@ angular.module('whiteboard.chat', [])
 
   socket.on('chat message', function (msg) {
     $scope.texts.push(msg);
+  });  
+
+  $scope.watch('texts', function () {
+    console.log('hi: texts');
   });
+
 })
 
 // Set changePen method.

@@ -6,21 +6,30 @@ angular.module('whiteboard.profile', [])
     $location.path('/new');
   }
 
-  User.getTodos()
-    .then(function (todos) {
-      $scope.todos = todos;
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+  $scope.getTodos = function () {
+    User.getTodos()
+      .then(function (todos) {
+        console.log('hi?');
+        $scope.todos = todos;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }
 
-  User.getBookmarks()
-    .then(function (bookmarks) {
-      $scope.bookmarks = bookmarks;
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+  $scope.getBookmarks = function () {
+    User.getBookmarks()
+      .then(function (bookmarks) {
+        console.log(bookmarks);
+        $scope.bookmarks = bookmarks;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });    
+  }
+
+  $scope.getTodos();
+  $scope.getBookmarks();
 
   $scope.gotoBookmark = function (url) {
     $location.path('/'+url);

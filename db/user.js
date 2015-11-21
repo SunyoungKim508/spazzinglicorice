@@ -9,9 +9,9 @@ var bookmarkSchema = new Schema({
   name: String
 });
 
-var todoSchema = new Schema({
-  todo: String
-});
+// var todoSchema = new Schema({
+//   todo: String
+// });
 
 var userSchema = new Schema({
   facebookId: String,
@@ -20,7 +20,7 @@ var userSchema = new Schema({
   lastName: String,
   email: String,
   bookmarks: [bookmarkSchema],
-  todos: [todoSchema]
+  todos: Array
 });
 
 var User = mongoose.model('user', userSchema);
