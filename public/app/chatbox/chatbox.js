@@ -1,14 +1,16 @@
 angular.module('devslate.chatbox', [])
 // TODO: use socket from service
-.controller('ChatboxCtrl', function ($scope, User) {
-  var ioRoom = window.location.href;
+.controller('ChatboxCtrl', function ($scope, User, Socket) {
+  // ioRoom = $stateParams.boardUrl;
+  // socket: io(ioRoom);
+  var socket = Socket.socket;
+
   // all messages from users will be stored in texts array
   $scope.texts = [];
   $scope.list = '';
   $scope.message = '';
 
   // using io instance(socket) by calling it ioRoom(namespace)
-  var socket = io(ioRoom);
   $scope.sendMessage = function (message, $event) {
     $event.preventDefault();
     console.log(message);

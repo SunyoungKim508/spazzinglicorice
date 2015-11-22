@@ -1,14 +1,18 @@
 angular.module('devslate.user', [])
 
-.controller('UserCtrl', function ($scope, $location, User, Board) {
+.controller('UserCtrl', function ($scope, $location, User, BoardDB) {
 // Set toolbar for colour palette and eraser. 
   $scope.todos = [];
   $scope.bookmarks = [];
 
+  $scope.bookmark = function (url) {
+    $location.path(url);
+  }
+
   // TODO
   $scope.createBoard = function (name) {
     console.log('createBoard');
-    Board.createBoard(name)
+    BoardDB.createBoard(name)
       .then(function (res) {
         console.log(res);
       })

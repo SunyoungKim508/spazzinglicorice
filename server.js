@@ -132,9 +132,11 @@ app.use('/api/board', boardRouter);
 require('./server/user/userRoutes.js')(userRouter);
 require('./server/board/boardRoutes.js')(boardRouter, Board, io);
 
-app.get('/5650c6587254774e9eb12304', isLoggedIn, function(req, res) {
+// TODO: add isLoggedIn
+app.get('/board/:url', function(req, res) {
   var url = req.params.url;
-  Board.findById(req.params.url, function(err, board) {
+  console.log('url: ', url);
+  Board.findById(url, function(err, board) {
     // If the board doesn't exist, or the route is invalid,
     // then redirect to the home page.
     if (err) {
@@ -142,11 +144,9 @@ app.get('/5650c6587254774e9eb12304', isLoggedIn, function(req, res) {
     } else {
       // Invoke [request handler](../documentation/sockets.html) for a new socket connection
       // with board id as the Socket.io namespace.
-      console.log(board);
-      handleSocket(req.params.url, board, io);
-      // Send back whiteboard html template.
-      // console.log(path.join(__dirname, '../..', 'public/board.html'));
-      res.sendFile(__dirname + '/public/board.html');
+      console.log('should be called');
+      handleSocket(url, board, io);
+      res.send(200);
     }
   });
 });

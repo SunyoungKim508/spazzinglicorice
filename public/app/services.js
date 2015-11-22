@@ -158,16 +158,32 @@ angular.module('devslate.services', [])
   };
 
 })
+.factory('BoardDB', function ($http) {
 
-.factory('Socket', function () {
-  var ioRoom = window.location.href;
-  var socket = io(ioRoom);
+  var createBoard = function (name) {
+    return $http({
+      method: 'POST',
+      data: {name: name},
+      url: 'http://localhost:8080/api/board'
+    });
+  };
+
+  return {
+    createBoard: createBoard
+  }
+})
+
+.factory('Socket', function ($stateParams) {
+  var ioRoom = $stateParams.boardUrl;
+  var socket = io('http://localhost:8080/board/' + ioRoom);
 
   return {
     socket: socket,
     ioRoom: ioRoom
   };
 })
+
+
 
 .factory('Chat', function($scope, $element, tools) {
   // var sendMessages = function () {
@@ -207,7 +223,7 @@ angular.module('devslate.services', [])
   var addTodo = function (todo) {
     return $http({
       method: 'POST',
-      data: todo,
+      data: {todo: todo},
       url: 'http://localhost:8080/api/user/todo'
     });
   };
@@ -242,12 +258,6 @@ angular.module('devslate.services', [])
       console.log(res);
       return res.data;
     });
-  };
-
-
-
-  var getAllUser = function () {
-
   };
 
   return {
