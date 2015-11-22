@@ -106,8 +106,8 @@ app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] 
 
 // handle the callback after facebook has authenticated the user
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-  successRedirect : '/564eca8fe594c70300b6380b', // TODO: fix routing to go to profile after login
-  failureRedirect : '/564eca8fe594c70300b6380b'
+  successRedirect : '/board', // TODO: fix routing to go to profile after login
+  failureRedirect : '/splash'
 }));
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -121,7 +121,7 @@ function isLoggedIn(req, res, next) {
         return next();
 
     // if they aren't redirect them to the home page
-    res.redirect('/');
+    res.redirect('/auth/facebook');
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -132,7 +132,7 @@ app.use('/api/board', boardRouter);
 require('./server/user/userRoutes.js')(userRouter);
 require('./server/board/boardRoutes.js')(boardRouter, Board, io);
 
-app.get('/5650c6587254774e9eb12304', isLoggedIn, function(req, res) {
+app.get('/board', isLoggedIn, function(req, res) {
   var url = req.params.url;
   Board.findById(req.params.url, function(err, board) {
     // If the board doesn't exist, or the route is invalid,
