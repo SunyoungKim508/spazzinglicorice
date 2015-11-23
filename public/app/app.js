@@ -7,7 +7,7 @@ angular.module('devslate', [
   'devslate.toolbar',
   'devslate.user',
   'devslate.whiteboard',
-
+  'devslate.filedrop'
 ])
   .config(function($stateProvider, $urlRouterProvider) {
 
@@ -20,6 +20,10 @@ angular.module('devslate', [
       .state('board', {
         url: '/board/:boardUrl',
         views: {
+          'filedrop': {
+            templateUrl: 'app/filedrop/filedrop.html',
+            controller: 'FiledropCtrl'
+          },
           'whiteboard': {
             templateUrl: 'app/whiteboard/whiteboard.html',
             controller: 'WhiteboardCtrl'
