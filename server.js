@@ -11,6 +11,8 @@ var Board = require('./db/board');
 var port = process.env.PORT || 8080;
 var handleSocket = require('./server/sockets');
 var EventEmitter = require('events').EventEmitter;
+// necessary for file uploads
+var multer  = require('multer');
 
 // ##Auth Dependencies
 var passport = require('passport');
@@ -151,6 +153,16 @@ app.get('/board/:url', function(req, res) {
     }
   });
 });
+
+///////////////////// File Drop //////////////////////////////////
+
+var upload = multer({ dest: 'uploads/' });
+
+app.post('/file/post', upload.single('file'), function(req, res) {
+  res.send(req.file);
+});
+//////////////////////////////////////////////////////////////////////////
+
 // **Start the server.**
 http.listen(port, function() {
   console.log('The magic is happening on ', port, 'at', new Date());
