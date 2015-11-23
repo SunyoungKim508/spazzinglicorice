@@ -29,3 +29,6 @@ bower_components
 
 # Super secret information
 db/mongokeys.js
+
+# uploaded files (from filedrop)
+uploads
