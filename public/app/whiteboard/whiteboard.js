@@ -15,18 +15,18 @@ angular.module('devslate.whiteboard', [])
   // };
   // $scope.initBoard();
 
-  $scope.setBoard = function (id) {
-    Board.connectBoard(id)
-    .then(function () {
-      Socket.set(id);
-
-      // Socket.on('hello', function () {
-      //   console.log('hello');
-      // });
-
-    });
-  };
-  $scope.setBoard('5654cdad95dc31d2c0c6c817');
+  // $scope.setBoard = function (id) {
+  //   Board.connectBoard(id)
+  //   .then(function () {
+  //     Socket.set(id);
+  //
+  //     // Socket.on('hello', function () {
+  //     //   console.log('hello');
+  //     // });
+  //
+  //   });
+  // };
+  // $scope.setBoard('5654cdad95dc31d2c0c6c817');
   // Board.newBoard()
   // .then(function (data) {
   //   Socket.set(data);
