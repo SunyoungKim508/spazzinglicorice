@@ -7,8 +7,9 @@ module.exports = {
     // TODO: session - user
     var boardname = req.body.name;
     var board = new Board({strokes: [], name: boardname});
-
-    User.findOne({facebookId: '1504780126484565'}).exec(function (err, user) {
+    var fbId = req.session.passport.user.facebookId;
+    
+    User.findOne({facebookId: fbId}).exec(function (err, user) {
       if (user) {
 
         user.bookmarks.push({name: boardname, url: board._id.toString()});
