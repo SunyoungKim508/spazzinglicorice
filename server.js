@@ -77,6 +77,7 @@ app.get('/new', function(req, res) {
   });
   // Redirect to the new board.
   handleSocket('/' + id, board, io);
+  res.send(id);
 });
 
 

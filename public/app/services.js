@@ -122,14 +122,7 @@ angular.module('devslate.services', [])
       return resp.data;
     });
   };
-//   //
-//   // // var getBoard = function () {
-//   // //   return $http({
-//   // //     method: 'GET',
-//   // //     url:
-//   // //   })
-//   // // }
-//   //
+
   return {
     // initialize: initialize,
     newBoard: newBoard,
@@ -164,14 +157,16 @@ angular.module('devslate.services', [])
 // })
 
 .factory('Socket', function ($rootScope) {
-  var socket = io.connect();
+  var socket = io;
 
   return {
     set: function (ioRoom) {
-      socket = io('http://localhost:8080/' + ioRoom);
+      socket = io.connect('http://localhost:8080/' + ioRoom);
       console.log('set socket to: ', ioRoom);
+      console.log('socket: ', socket);
     },
     on: function (eventName, callback) {
+      console.log('set socket listener: ', eventName);
       socket.on(eventName, function () {
         var args = arguments;
         $rootScope.$apply(function () {
