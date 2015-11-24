@@ -13,14 +13,15 @@ module.exports = function(passport) {
 
   // used to serialize the user for the session
   passport.serializeUser(function(user, done) {
-      done(null, user.facebookId);
+      done(null, user);
   });
 
   // used to deserialize the user
-  passport.deserializeUser(function(facebookId, done) {
-      User.findOne({'facebookId': facebookId}, function(err, user) {
-          done(err, user);
-      });
+  passport.deserializeUser(function(user, done) {
+    done(null, user);
+    // User.findOne({'facebookId': facebookId}, function(err, user) {
+    //   done(err, user);
+    // });
   });
 
   // =========================================================================

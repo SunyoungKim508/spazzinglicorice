@@ -7,12 +7,13 @@
         <button ng-click="getBookmark(bookmark.url)">Go to Board</button>
       </li>
     </ul>
-  </div>
-  <div class="todo">
     <input type="text" ng-model="bookmarkedboard">
     <button ng-click="createBoard(bookmarkedboard)">New Board</button>
+  </div>
+  <div class="todo">
+    <h3>Todo List</h3>
     <ul>
-      <li ng-repeat="todo in todos">{{todo}}</li>
+      <li ng-repeat="todo in todos track by $index"><span>{{todo}}</span></li>
     </ul>
   </div>
 </div>

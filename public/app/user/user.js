@@ -22,10 +22,10 @@ angular.module('devslate.user', [])
     // $location.path('/new');
   };
 
-  console.log('user', User);
   $scope.getTodos = function () {
     User.getTodos()
       .then(function (todos) {
+        console.log(todos);
         $scope.todos = todos;
       })
       .catch(function (err) {
