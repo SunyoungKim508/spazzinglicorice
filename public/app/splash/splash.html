@@ -1,14 +1,23 @@
 <header id="header">
   <h1>Coderboard</h1>
   <p>Fast &nbsp;&bull;&nbsp; Free &nbsp;&bull;&nbsp; For Your Coding Interviews</p>
-  <div class="buttons">
-    <!-- <a href="/new"> -->
-    <a ui-sref="board">
-      <!-- <button class="pure-button"> -->
-      <button>Start Whiteboarding Now</button>
-    </a>
+  <div ng-show="userIsAuth">
+    <div class="buttons">
+      <!-- <a href="/new"> -->
+      <a ui-sref="board">
+        <!-- <button class="pure-button"> -->
+        <button>Start Whiteboarding Now</button>
+      </a>
+    </div>
+    <div>
+      <a ui-sref="userpage">
+        <!-- <button class="pure-button"> -->
+        <button>User</button>
+      </a>
+    </div>
   </div>
-  <div class="buttons">
+  <div ng-show="!(userIsAuth)" class="buttons">
+    <h3>Please Log In</h3>
     <a href="/auth/facebook">
       <button class="facebookBtn">Log In With Facebook</button>
     </a>
@@ -18,10 +27,5 @@
       <!-- <button class="pure-button"> -->
       <button>Documentation</button>
     </a>
-    <a ui-sref="userpage">
-      <!-- <button class="pure-button"> -->
-      <button>User</button>
-    </a>
-  </div>
   </div>
 </header>
