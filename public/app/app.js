@@ -56,23 +56,16 @@ angular.module('devslate', [
 
   $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams){
     
-    $http.get('/authenticate').then(function (response) {
-      var facebookId =  response.data;
-      if (toState.authenticate && !facebookId){
-        // User isn’t authenticated
-        $state.transitionTo("splash");
-        event.preventDefault(); 
-      }
-    })
+    if (toState.authenticate){
+      Authenticate.isAuthenticated().then(function(authStatus) {
+        console.log("Authenticate", authStatus);
+        if (!authStatus) {        
+          // User isn’t authenticated
+          $state.transitionTo("splash");
+          event.preventDefault(); 
+        }
+      })
+    }
   });
 
-  // $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams){
-    
-  //   console.log("Authenticate", !Authenticate.isAuthenticated());
-  //   if (toState.authenticate && !Authenticate.isAuthenticated()){
-  //     // User isn’t authenticated
-  //     $state.transitionTo("splash");
-  //     event.preventDefault(); 
-  //   }
-  // });
 }]);

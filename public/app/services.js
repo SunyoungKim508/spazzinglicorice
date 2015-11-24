@@ -270,10 +270,10 @@ angular.module('devslate.services', ['ngCookies'])
   };
 })
 
-.factory('Authenticate', function ($cookies, $http) {
+.factory('Authenticate', function ($http) {
+
   var isAuthenticated = function () {
-    console.log("inside authenticate factory");
-    console.log("COOKIES", $cookies.getAll());
+
     return $http.get('/authenticate').then(function (response) {
       var facebookId = response.data;
       console.log("facebookId", facebookId);

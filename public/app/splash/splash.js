@@ -1,8 +1,13 @@
 angular.module('devslate.splash', [])
 
-.controller('SplashCtrl', function ($scope, $stateParams, Authenticate, $http) {
-  $http.get('/authenticate').then(function (response) {
-    var facebookId =  response.data;
-    $scope.userIsAuth = facebookId;
-  });
+.controller('SplashCtrl', function ($scope, $stateParams, Authenticate) {
+  $scope.userIsAuth = false;
+
+  var getAuthStatus = function () {
+    Authenticate.isAuthenticated().then(function (authStatus) {
+      $scope.userIsAuth = authStatus;
+    })
+  }
+
+  getAuthStatus();
 });
