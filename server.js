@@ -108,8 +108,8 @@ app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] 
 
 // handle the callback after facebook has authenticated the user
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-  successRedirect : '/board', // TODO: fix routing to go to profile after login
-  failureRedirect : '/splash'
+  successRedirect : '/#/user', // TODO: fix routing to go to profile after login
+  failureRedirect : '/#/splash'
 }));
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +135,7 @@ require('./server/user/userRoutes.js')(userRouter);
 require('./server/board/boardRoutes.js')(boardRouter, Board, io);
 
 // TODO: add isLoggedIn
-app.get('/board/:url', function(req, res) {
+app.get('/board/:url', function (req, res) {
 // app.get('/board', isLoggedIn, function(req, res) {
   var url = req.params.url;
   console.log('url: ', url);
@@ -153,6 +153,17 @@ app.get('/board/:url', function(req, res) {
     }
   });
 });
+
+app.get('/authenticate', function (req, res) {
+  console.log("AUTHENTICATED", req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    console.log("REQ SES USR", req.session.passport.user);
+    res.send(req.session.passport.user);
+  } else {
+    console.log("not authenticated");
+    res.send();
+  }
+})
 
 ///////////////////// File Drop //////////////////////////////////
 
