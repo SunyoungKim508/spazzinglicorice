@@ -21,8 +21,15 @@
   "dependencies": {
     "foundation": "~5.5.3",
     "angular-ui-codemirror": "~0.3.0",
+<<<<<<< 3f75fe4e10e3f810d09875407d2f8b72412c3a71
     "angular-dropzone": "~0.1.2",
     "bootstrap": "~3.3.5",
     "angular-cookies": "~1.4.8"
+||||||| merged common ancestors
+    "angular-dropzone": "~0.1.2"
+=======
+    "angular-dropzone": "~0.1.2",
+    "bootstrap": "~3.3.5"
+>>>>>>> socket initialization working on canvas directive load
   }
 }
