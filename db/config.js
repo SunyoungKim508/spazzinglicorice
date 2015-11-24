@@ -4,9 +4,11 @@
 var mongoose = require('mongoose');
 
 // Currently configured for deployment. Change to this for development:
-// ```mongoose.connect('mongodb://127.0.0.1');```
+// mongoose.connect('mongodb://127.0.0.1');
 // mongoose.connect(process.env.MONGOLAB_URI);
-mongoose.connect('mongodb://127.0.0.1/whiteboard');
+var db_URL = 'mongodb://127.0.0.1/whiteboard' || 'mongodb://devslate:devslate@ds057954.mongolab.com:57954/devslate';
+mongoose.connect(db_URL);
+// mongoose.connect('mongodb://devslate:devslate@ds057954.mongolab.com:57954/devslate');
 
 
 var db = mongoose.connection;

@@ -79,28 +79,6 @@ app.get('/new', function(req, res) {
   res.redirect('/' + id);
 });
 
-
-// **Wildcard route & board id handler.**
-
-//TODO: Need this to be acutally routed --> COMMENTED OUT ORIGIONAL BELOW
-////////////////////////////////////////////////////////////////////////////////////////////////
-// app.get('/564eca8fe594c70300b6380b', isLoggedIn, function(req, res) {
-//   var id = req.url.slice(1);
-//   Board.findOne({id: id}, function(err, board) {
-//     // If the board doesn't exist, or the route is invalid,
-//     // then redirect to the home page.
-//     if (err) {
-//       res.redirect('/');
-//     } else {
-//       // Invoke [request handler](../documentation/sockets.html) for a new socket connection
-//       // with board id as the Socket.io namespace.
-//       handleSocket(req.url, board, io);
-//       // Send back whiteboard html template.
-//       res.sendFile(__dirname + '/public/board.html');
-//     }
-//   });
-// });
-
 ///////////////////// FACEBOOK ROUTES //////////////////////////////////////////
 
 // route for facebook authentication and login
@@ -108,8 +86,8 @@ app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] 
 
 // handle the callback after facebook has authenticated the user
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-  successRedirect : '/board', // TODO: fix routing to go to profile after login
-  failureRedirect : '/splash'
+  successRedirect : '/#/user', // TODO: fix routing to go to profile after login
+  failureRedirect : '/#/splash'
 }));
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -133,26 +111,6 @@ app.use('/api/user', userRouter);
 app.use('/api/board', boardRouter);
 require('./server/user/userRoutes.js')(userRouter);
 require('./server/board/boardRoutes.js')(boardRouter, Board, io);
-
-// TODO: add isLoggedIn
-app.get('/board/:url', function(req, res) {
-// app.get('/board', isLoggedIn, function(req, res) {
-  var url = req.params.url;
-  console.log('url: ', url);
-  Board.findById(url, function(err, board) {
-    // If the board doesn't exist, or the route is invalid,
-    // then redirect to the home page.
-    if (err) {
-      res.redirect('/');
-    } else {
-      // Invoke [request handler](../documentation/sockets.html) for a new socket connection
-      // with board id as the Socket.io namespace.
-      console.log('should be called');
-      handleSocket(url, board, io);
-      res.send(200);
-    }
-  });
-});
 
 ///////////////////// File Drop //////////////////////////////////
 

@@ -164,6 +164,7 @@ angular.module('devslate.services', [])
     return $http({
       method: 'POST',
       data: {name: name},
+      // url: 'http://devslate.elasticbeanstalk.com/api/board'
       url: 'http://localhost:8080/api/board'
     });
   };
@@ -175,6 +176,7 @@ angular.module('devslate.services', [])
 
 .factory('Socket', function ($stateParams) {
   var ioRoom = $stateParams.boardUrl;
+  // var socket = io('http://devslate.elasticbeanstalk.com/board/' + ioRoom);
   var socket = io('http://localhost:8080/board/' + ioRoom);
 
   return {
@@ -199,6 +201,7 @@ angular.module('devslate.services', [])
   var getUser = function () {
     return $http({
       method: 'GET',
+      // url: 'http://devslate.elasticbeanstalk.com/api/user'
       url: 'http://localhost:8080/api/user'
     }).then(function (res) {
       // user object
@@ -210,6 +213,7 @@ angular.module('devslate.services', [])
   var getTodos = function () {
     return $http({
       method: 'GET',
+      // url: 'http://devslate.elasticbeanstalk.com/api/user/todo'
       url: 'http://localhost:8080/api/user/todo'
     }).then(function (res) {
       // return todos list(Array)
@@ -224,6 +228,7 @@ angular.module('devslate.services', [])
     return $http({
       method: 'POST',
       data: {todo: todo},
+      // url: 'http://devslate.elasticbeanstalk.com/api/user/todo'
       url: 'http://localhost:8080/api/user/todo'
     });
   };
@@ -232,6 +237,7 @@ angular.module('devslate.services', [])
   var getBookmarks = function () {
     return $http({
       method: 'GET',
+      // url: 'http://devslate.elasticbeanstalk.com/api/user/bookmark'
       url: 'http://localhost:8080/api/user/bookmark'
     }).then(function (res) {
       // return bookmarks list(Array)
@@ -245,6 +251,7 @@ angular.module('devslate.services', [])
     return $http({
       method: 'POST',
       data: bookmark,
+      // url: 'http://devslate.elasticbeanstalk.com/api/user/bookmark'
       url: 'http://localhost:8080/api/user/bookmark'
     });
   };
@@ -252,6 +259,7 @@ angular.module('devslate.services', [])
   var getBookmark = function (bookmarkUrl) {
     return $http({
       method: 'GET',
+      // url: 'http://devslate.elasticbeanstalk.com/api/user/bookmark/' + bookmarkUrl
       url: 'http://localhost:8080/api/user/bookmark/' + bookmarkUrl
     }).then(function (res) {
       // return bookmarks list(Array)
