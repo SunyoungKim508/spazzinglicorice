@@ -20,6 +20,22 @@ angular.module('devslate.services', ['ngCookies'])
   };
 })
 
+.factory('BoardDB', function ($http) {
+
+  var createBoard = function (name) {
+    return $http({
+      method: 'POST',
+      data: {name: name},
+      // url: 'http://devslate.elasticbeanstalk.com/api/board'
+      url: 'http://localhost:8080/api/board'
+    });
+  };
+
+  return {
+    createBoard: createBoard
+  }
+})
+
 .factory('Board', function ($http, Socket) {
 //
 //
