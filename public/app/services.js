@@ -1,4 +1,4 @@
-angular.module('devslate.services', [])
+angular.module('devslate.services', ['ngCookies'])
 
 .factory('Tools', function($rootScope) {
   // Set changePen method.
@@ -259,4 +259,20 @@ angular.module('devslate.services', [])
     getUser: getUser,
     getBookmark: getBookmark
   };
+})
+
+.factory('Authenticate', function ($http) {
+
+  var isAuthenticated = function () {
+
+    return $http.get('/authenticate').then(function (response) {
+      var facebookId = response.data;
+      console.log("facebookId", facebookId);
+      console.log(!!facebookId);
+      return !!(facebookId);
+    });
+  };
+  return {
+    isAuthenticated: isAuthenticated
+  }
 });

@@ -45,10 +45,27 @@ angular.module('devslate', [
       .state('userpage', {
         url: '/user',
         templateUrl: 'app/user/userpage.html',
-        controller: 'UserCtrl'
+        controller: 'UserCtrl',
+        authenticate: true
       });
       $urlRouterProvider.otherwise('/splash');
   })
 
 // Make sure the stateprovider routes get started up
-.run(['$state', function ($state) {}]);
+.run(['$state', '$rootScope', 'Authenticate', '$http', function ($state, $rootScope, Authenticate, $http) {
+
+  $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams){
+    
+    if (toState.authenticate){
+      Authenticate.isAuthenticated().then(function(authStatus) {
+        console.log("Authenticate", authStatus);
+        if (!authStatus) {        
+          // User isn’t authenticated
+          $state.transitionTo("splash");
+          event.preventDefault(); 
+        }
+      })
+    }
+  });
+
+}]);
