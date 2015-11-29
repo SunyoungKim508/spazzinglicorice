@@ -8,7 +8,7 @@ module.exports = {
     var boardname = req.body.name;
     var board = new Board({strokes: [], name: boardname});
     var fbId = req.session.passport.user.facebookId;
-    
+
     User.findOne({facebookId: fbId}).exec(function (err, user) {
       if (user) {
 
@@ -21,7 +21,7 @@ module.exports = {
               res.redirect('/' + board._id);
               console.log('board saved!');
             }
-          });          
+          });
         });
       } else {
         console.log('log in first');

@@ -14,20 +14,23 @@ var Board = require('../db/board');
 var connect = function(boardUrl, board, io) {
 
   // Set the Socket.io namespace to the boardUrl.
-  var whiteboard = io.of(boardUrl);
+  var whiteboard = io.connect();
+
 
   whiteboard.once('connection', function(socket) {
     //require our separate modules - drawing, chat, etc...
     console.log('work');
-    require('./drawing/drawing.js')(socket, Board);
+    socket.join(boardUrl);
+
+    require('./drawing/drawing.js')(socket, boardUrl, Board);
 
     console.log('about to emit join, board: ', board);
-    socket.emit('join', board);
+    socket.to(boardUrl).emit('join', board);
 
     socket.on('chat message', function (msg) {
       console.log('are you working?');
       console.log('chatter' + msg);
-      whiteboard.emit('chat message', msg);
+      socket.to(boardUrl).broadcast.emit('chat message', msg);
     });
 
     /**
@@ -36,7 +39,7 @@ var connect = function(boardUrl, board, io) {
      */
     socket.on('code-text', function (msg) {
           console.log('recieved: \n', msg);
-          socket.broadcast.emit('code-text', msg);
+          socket.to(boardUrl).broadcast.emit('code-text', msg);
     });
 
 
