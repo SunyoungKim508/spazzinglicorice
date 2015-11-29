@@ -20,6 +20,7 @@ var connect = function(boardUrl, board, io) {
   // initialize ot for codebox
   var socketIOServer = new ot.EditorSocketIOServer(board.codebox || 'test', [], 'demo');
   var usercount = 0;
+
   whiteboard.once('connection', function(socket) {
     // add client to ot instance
     socketIOServer.addClient(socket);
@@ -31,6 +32,7 @@ var connect = function(boardUrl, board, io) {
 
     // require our separate modules - drawing, chat, etc...
     console.log('work');
+
     require('./drawing/drawing.js')(socket, Board);
 
     console.log('about to emit join, board: ', board);
@@ -39,7 +41,7 @@ var connect = function(boardUrl, board, io) {
     socket.on('chat message', function (msg) {
       console.log('are you working?');
       console.log('chatter' + msg);
-      whiteboard.emit('chat message', msg);
+      socket.broadcast.emit('chat message', msg);
     });
 
     /**
