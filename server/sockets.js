@@ -43,7 +43,6 @@ var connect = function(boardUrl, board, io) {
       console.log('chatter' + msg);
       socket.broadcast.emit('chat message', msg);
     });
-
     /**
      *    Socket functions for codebox
      *    don't fuck around
