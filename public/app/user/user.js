@@ -1,6 +1,6 @@
 angular.module('devslate.user', [])
 
-.controller('UserCtrl', function ($scope, $location, User, $http) {
+.controller('UserCtrl', function ($scope, $location, User, $http, Authenticate) {
 // Set toolbar for colour palette and eraser. 
   $scope.todos = [];
   $scope.bookmarks = [];
@@ -8,9 +8,11 @@ angular.module('devslate.user', [])
 
   $scope.getUser = function (url) {
     // send get request with facebook ID to get user profile picture
+    var facebookId = Authenticate.facebookId();
+    console.log('facebookID inside get User', facebookId);
     $http({
       method: 'GET',
-      url:'https://graph.facebook.com/10208138228752958/picture?redirect=false&type=large'
+      url:'https://graph.facebook.com/'+facebookId+'/picture?redirect=false&type=large'
     }).then(function (data) {
       console.log('data inside get user: ', data);
       $scope.profPicUrl = data.data.data.url;
