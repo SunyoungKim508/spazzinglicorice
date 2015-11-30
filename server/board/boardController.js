@@ -8,20 +8,19 @@ module.exports = {
     var boardname = req.body.name;
     var board = new Board({strokes: [], name: boardname});
     var fbId = req.session.passport.user.facebookId;
-    
+
     User.findOne({facebookId: fbId}).exec(function (err, user) {
       if (user) {
-
         user.bookmarks.push({name: boardname, url: board._id.toString()});
         user.save(function (err, user) {
-          if (err) {console.log('err!')};
+          if (err) {console.log('err!');}
           board.save(function(err, board) {
             if (err) { console.error(err); }
             else {
               res.redirect('/' + board._id);
               console.log('board saved!');
             }
-          });          
+          });
         });
       } else {
         console.log('log in first');
@@ -36,4 +35,4 @@ module.exports = {
     var url = req.params.url;
     res.redirect('/'+url);
   }
-}
+};

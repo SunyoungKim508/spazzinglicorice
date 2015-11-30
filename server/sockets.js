@@ -16,7 +16,6 @@ var connect = function(boardUrl, board, io) {
   // Set the Socket.io namespace to the boardUrl.
   var whiteboard = io.of(boardUrl);
 
-
   whiteboard.once('connection', function(socket) {
     //require our separate modules - drawing, chat, etc...
     console.log('work');

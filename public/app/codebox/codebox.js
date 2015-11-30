@@ -9,7 +9,7 @@ angular.module('devslate.codebox', ['ui.codemirror'])
         value: 'asdasdas',
         theme: 'solarized light',
         tabSize: 2,
-        keyMap: 'sublime'
+        keyMap: 'sublime',
     };
 
 
@@ -22,6 +22,7 @@ angular.module('devslate.codebox', ['ui.codemirror'])
 
   $scope.codebox = function (_editor) {
      // Editor part
+     _editor.setSize('100%', '100%');
       var _doc = _editor.getDoc();
       _editor.focus();
 
