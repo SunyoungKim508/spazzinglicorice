@@ -215,7 +215,8 @@ angular.module('devslate.whiteboard', [])
       };
       //hardcoded board for now, just for testing purposes
       //replace this with a board you know exists on your local database
-      setBoard('5654cdad95dc31d2c0c6c817');
+      console.log('currentBoard: ', $rootScope.currentBoard);
+      setBoard($rootScope.currentBoard);
     }
   };
 });

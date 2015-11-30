@@ -134,9 +134,6 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 ///////////////////////////////////////////////////////////////////////////////////////////
 // function to verify if user is authenticated --> will need to move to routes
 function isLoggedIn(req, res, next) {
-
-    console.log(req.isAuthenticated());
-
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
         return next();
@@ -154,7 +151,7 @@ require('./server/user/userRoutes.js')(userRouter);
 require('./server/board/boardRoutes.js')(boardRouter, Board, io);
 
 // TODO: add isLoggedIn
-app.get('/board/:url', function (req, res) {
+app.get('/board/:url', isLoggedIn, function (req, res) {
 // app.get('/board', isLoggedIn, function(req, res) {
   var url = req.params.url;
   console.log('url: ', url);

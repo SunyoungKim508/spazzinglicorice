@@ -17,17 +17,16 @@ module.exports = {
           board.save(function(err, board) {
             if (err) { console.error(err); }
             else {
-              res.redirect('/' + board._id);
-              console.log('board saved!');
+              console.log('board saved!!!!');
+              res.status(200).json(user.bookmarks);
             }
-          });
+          }); 
         });
       } else {
         console.log('log in first');
       }
-      if (err) {
-        next(err);
-      }
+
+      if (err) {next(err);}
     });
   },
 

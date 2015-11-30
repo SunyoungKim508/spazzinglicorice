@@ -18,7 +18,7 @@ angular.module('devslate', [
         controller: 'SplashCtrl'
       })
       .state('board', {
-        url: '/board/:boardUrl',
+        url: '/board',
         views: {
           'whiteboard': {
             templateUrl: 'app/whiteboard/whiteboard.html',
