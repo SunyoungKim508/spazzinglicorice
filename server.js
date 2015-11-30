@@ -8,7 +8,9 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Board = require('./db/board');
-var port = process.env.PORT || 8080;
+// TODO
+// var port = process.env.PORT || 8080;
+var port = 8080;
 var handleSocket = require('./server/sockets');
 var EventEmitter = require('events').EventEmitter;
 // necessary for file uploads
