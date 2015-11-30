@@ -134,7 +134,7 @@ angular.module('devslate.services', ['ngCookies'])
 })
 
 .factory('Socket', function ($rootScope) {
-  var socket = io;
+  var socket = io.connect();
 
   return {
     set: function (ioRoom) {
@@ -272,11 +272,11 @@ angular.module('devslate.services', ['ngCookies'])
       return !!(user);
     });
   };
-  
+
   return {
     isAuthenticated: isAuthenticated,
     user: function() {
-      return user
+      return user;
     }
-  }
+  };
 });

@@ -13,8 +13,8 @@ angular.module('devslate.codebox', ['ui.codemirror'])
     theme: 'solarized light',
     tabSize: 2,
     keyMap: 'sublime'
-  };
 
+  };
   /**
    * codebox instance
    * @param   {obj}  _cm  cm instance
@@ -22,7 +22,7 @@ angular.module('devslate.codebox', ['ui.codemirror'])
   $scope.codebox = function(_cm) {
     _cm.setSize('100%', '100%');
     var cmClient;
-    
+
     /**
      * initializes operational transform library
      * @param   {str}  str            the initial text for doc
@@ -34,10 +34,10 @@ angular.module('devslate.codebox', ['ui.codemirror'])
     var init = function(str, revision, clients, serverAdapter) {
       _cm.setValue(str);
       cmClient = new ot.EditorClient(
-        revision, 
-        clients, 
-        serverAdapter, 
-        new ot.CodeMirrorAdapter(cm)
+        revision,
+        clients,
+        serverAdapter,
+        new ot.CodeMirrorAdapter(_cm)
         );
     };
 
@@ -49,9 +49,7 @@ angular.module('devslate.codebox', ['ui.codemirror'])
     // _cm.setOption('firstLineNumber', 10);
     _doc.markClean();
 
-
-    /**
-     * initialize cm text with ot on socket recieving doc
+     /* initialize cm text with ot on socket recieving doc
      */
     $scope.on('socket-init', function() {
       ioApi.on('doc', function(obj) {
@@ -60,4 +58,3 @@ angular.module('devslate.codebox', ['ui.codemirror'])
     });
   };
 });
-

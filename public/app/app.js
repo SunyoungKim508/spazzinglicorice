@@ -20,10 +20,6 @@ angular.module('devslate', [
       .state('board', {
         url: '/board/:boardUrl',
         views: {
-          'filedrop': {
-            templateUrl: 'app/filedrop/filedrop.html',
-            controller: 'FiledropCtrl'
-          },
           'whiteboard': {
             templateUrl: 'app/whiteboard/whiteboard.html',
             controller: 'WhiteboardCtrl'
@@ -39,6 +35,10 @@ angular.module('devslate', [
           'toolbar': {
             templateUrl: 'app/toolbar/toolbar.html',
             controller: 'ToolbarCtrl'
+          },
+          'toolbar.filedrop': {
+            templateUrl: 'app/filedrop/filedrop.html',
+            controller: 'FiledropCtrl'
           }
         }
       })
@@ -55,16 +55,16 @@ angular.module('devslate', [
 .run(['$state', '$rootScope', 'Authenticate', '$http', function ($state, $rootScope, Authenticate, $http) {
 
   $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams){
-    
+
     if (toState.authenticate){
       Authenticate.isAuthenticated().then(function(authStatus) {
         console.log("Authenticate", authStatus);
-        if (!authStatus) {        
+        if (!authStatus) {
           // User isn’t authenticated
           $state.transitionTo("splash");
-          event.preventDefault(); 
+          event.preventDefault();
         }
-      })
+      });
     }
   });
 

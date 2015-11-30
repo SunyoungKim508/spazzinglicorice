@@ -38,7 +38,7 @@ angular.module('devslate.whiteboard', [])
 })
 
 //drawing directive attached to canvas element
-.directive("drawing", function (Socket, Board) {
+.directive("drawing", function (Socket, Board, $rootScope) {
   return {
     restrict: "A",
     link: function (scope, element) {
@@ -49,11 +49,18 @@ angular.module('devslate.whiteboard', [])
         .then(function () {
 
           Socket.set(id);
-
+          $rootScope.$broadcast('socket-init');
           //initializing all the drawing functions inside .then because the socket
           //must be initialized before listeners are attached
-          element[0].width = window.innerWidth * 0.5;
-          element[0].height = window.innerHeight * 0.67;
+
+
+          // Make it visually fill the positioned parent
+          // ...then set the internal size to match
+          element[0].width  = element[0].offsetWidth;
+          element[0].height = element[0].offsetHeight;
+
+          // element[0].width = window.innerWidth * 0.5;
+          // element[0].height = window.innerHeight * 0.67;
           var context = element[0].getContext('2d');
 
           var otherUserActive = false;
