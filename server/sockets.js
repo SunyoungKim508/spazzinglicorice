@@ -13,26 +13,31 @@ var Board = require('../db/board');
 // **boardUrl:** *String* <br>
 // **board:** *Mongoose board model* <br>
 // **io:** *Export of our Socket.io connection from [server.js](../documentation/server.html)*
+var socketIOServers = {};
+var usercount = 0;
 var connect = function(boardUrl, board, io) {
 
   // Set the Socket.io namespace to the boardUrl.
   var whiteboard = io.of(boardUrl);
   // initialize ot for codebox
-  var socketIOServer = new ot.EditorSocketIOServer(board.codebox, [], board._id);
-  var usercount = 0;
+  if(!socketIOServers[board._id]){
+    console.log('Initialing new board');
+    socketIOServers[board._id] = new ot.EditorSocketIOServer(board.codebox, [], board._id);
+  }
 
   whiteboard.once('connection', function(socket) {
     // add client to ot instance
-    socketIOServer.addClient(socket);
-    socketIOServer.setName(socket, 'User' + ++usercount);
+    console.log('Adding new user');
+    socketIOServers[board._id].addClient(socket);
+    socketIOServers[board._id].setName(socket, 'User' + ++usercount);
 
     // require our separate modules - drawing, chat, etc...
     console.log('work');
 
     require('./drawing/drawing.js')(socket, Board);
 
-    console.log('about to emit join, board: ', board);
-    socket.emit('join', board);
+    // console.log('about to emit join, board: ', board);
+    // socket.emit('join', board);
 
     socket.on('chat message', function (msg) {
       console.log('are you working?');
