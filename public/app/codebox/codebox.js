@@ -50,13 +50,14 @@ angular.module('devslate.codebox', ['ui.codemirror'])
     _doc.markClean();
 
 
-  /**
-   * initialize cm text with ot on socket recieving doc
-   */
-  ioApi.on('doc', function(obj) {
-    init(obj.str, obj.revision, obj.clients, new ot.SocketIOAdapter(ioApi));
-  });
-};
-
+    /**
+     * initialize cm text with ot on socket recieving doc
+     */
+    $scope.on('socket-init', function() {
+      ioApi.on('doc', function(obj) {
+        init(obj.str, obj.revision, obj.clients, new ot.SocketIOAdapter(ioApi));
+      });
+    });
+  };
 });
 
