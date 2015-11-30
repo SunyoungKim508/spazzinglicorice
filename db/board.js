@@ -11,7 +11,7 @@ var boardSchema = new mongoose.Schema({
   name: String,
   code: String,
   strokes: Array,
-  codebox: String
+  codebox: {type: String, default: 'Type code here!'}
 });
 
 var Board = mongoose.model('board', boardSchema);

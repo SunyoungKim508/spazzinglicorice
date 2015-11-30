@@ -51,9 +51,10 @@ angular.module('devslate.codebox', ['ui.codemirror'])
 
      /* initialize cm text with ot on socket recieving doc
      */
-    $scope.on('socket-init', function() {
-      ioApi.on('doc', function(obj) {
-        init(obj.str, obj.revision, obj.clients, new ot.SocketIOAdapter(ioApi));
+    $scope.$on('socket-init', function() {
+      Socket.on('doc', function(obj) {
+        console.log(obj);
+        init(obj.str, obj.revision, obj.clients, new ot.SocketIOAdapter(Socket.socket()));
       });
     });
   };

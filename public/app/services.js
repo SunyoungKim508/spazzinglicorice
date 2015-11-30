@@ -150,6 +150,7 @@ angular.module('devslate.services', ['ngCookies'])
           callback.apply(socket, args);
         });
       });
+      return this;
     },
     emit: function (eventName, data, callback) {
       socket.emit(eventName, data, function () {
@@ -160,6 +161,10 @@ angular.module('devslate.services', ['ngCookies'])
           }
         });
       });
+      return this;
+    },
+    socket: function () {
+      return socket;
     }
   };
 })
