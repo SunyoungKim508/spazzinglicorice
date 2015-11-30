@@ -1,3 +1,5 @@
+var ot = require('ot');
+
 // # Socket Connection Handler
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
@@ -15,9 +17,19 @@ var connect = function(boardUrl, board, io) {
 
   // Set the Socket.io namespace to the boardUrl.
   var whiteboard = io.of(boardUrl);
-
+  // initialize ot for codebox
+  var socketIOServer = new ot.EditorSocketIOServer(board.codebox || 'test', [], 'demo');
+  var usercount = 0;
   whiteboard.once('connection', function(socket) {
-    //require our separate modules - drawing, chat, etc...
+    // add client to ot instance
+    socketIOServer.addClient(socket);
+    socketIOServer.setName(socket, 'User' + usercount++);
+    // log any data that comes through
+    socket.on('operation', function (data) {
+      console.log(socketIOServer.document);
+    });
+
+    // require our separate modules - drawing, chat, etc...
     console.log('work');
     require('./drawing/drawing.js')(socket, Board);
 

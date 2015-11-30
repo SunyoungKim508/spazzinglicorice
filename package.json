@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/SpazzingLicorice/spazzinglicorice",
   "dependencies": {
-    "aws-sdk": "*",
     "angular": "^1.4.7",
+    "aws-sdk": "*",
     "body-parser": "~1.0.0",
     "connect-flash": "~0.1.1",
     "cookie-parser": "~1.0.0",
@@ -34,6 +34,7 @@
     "mongoose": "~3.8.8",
     "morgan": "~1.0.0",
     "multer": "^1.1.0",
+    "ot": "0.0.15",
     "passport": "~0.1.17",
     "passport-facebook": "~1.0.2",
     "q": "^1.4.1",

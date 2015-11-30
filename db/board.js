@@ -10,7 +10,8 @@ var boardSchema = new mongoose.Schema({
   // id: String,
   name: String,
   code: String,
-  strokes: Array
+  strokes: Array,
+  codebox: String
 });
 
 var Board = mongoose.model('board', boardSchema);
