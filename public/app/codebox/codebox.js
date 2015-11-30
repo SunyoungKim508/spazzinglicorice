@@ -56,5 +56,7 @@ angular.module('devslate.codebox', ['ui.codemirror'])
   ioApi.on('doc', function(obj) {
     init(obj.str, obj.revision, obj.clients, new ot.SocketIOAdapter(ioApi));
   });
+};
 
 });
+
