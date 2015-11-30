@@ -8,8 +8,9 @@ angular.module('devslate.user', [])
 
   $scope.getUser = function (url) {
     // send get request with facebook ID to get user profile picture
-    var facebookId = Authenticate.facebookId();
-    console.log('facebookID inside get User', facebookId);
+    var facebookId = Authenticate.user().facebookId;
+    //console.log('USER', Authenticate.user());
+    $scope.user = Authenticate.user();
     $http({
       method: 'GET',
       url:'https://graph.facebook.com/'+facebookId+'/picture?redirect=false&type=large'
