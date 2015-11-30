@@ -38,7 +38,7 @@ angular.module('devslate.whiteboard', [])
 })
 
 //drawing directive attached to canvas element
-.directive("drawing", function (Socket, Board) {
+.directive("drawing", function (Socket, Board, $rootScope) {
   return {
     restrict: "A",
     link: function (scope, element) {
@@ -49,7 +49,7 @@ angular.module('devslate.whiteboard', [])
         .then(function () {
 
           Socket.set(id);
-
+          $rootScope.$broadcast('socket-init');
           //initializing all the drawing functions inside .then because the socket
           //must be initialized before listeners are attached
 

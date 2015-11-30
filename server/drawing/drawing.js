@@ -1,4 +1,3 @@
-
 var drawing = function(socket, Board) {
 
   socket.on('start', function(pen) {
