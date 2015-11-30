@@ -20,6 +20,7 @@ angular.module('devslate.codebox', ['ui.codemirror'])
    * @param   {obj}  _cm  cm instance
    */
   $scope.codebox = function(_cm) {
+    _cm.setSize('100%', '100%');
     var cmClient;
     
     /**
@@ -32,7 +33,12 @@ angular.module('devslate.codebox', ['ui.codemirror'])
      */
     var init = function(str, revision, clients, serverAdapter) {
       _cm.setValue(str);
-      cmClient = new ot.EditorClient(revision, clients, serverAdapter, new ot.CodeMirrorAdapter(cm));
+      cmClient = new ot.EditorClient(
+        revision, 
+        clients, 
+        serverAdapter, 
+        new ot.CodeMirrorAdapter(cm)
+        );
     };
 
     //define cm doc
@@ -43,9 +49,6 @@ angular.module('devslate.codebox', ['ui.codemirror'])
     // _cm.setOption('firstLineNumber', 10);
     _doc.markClean();
 
-    var copy = _doc.linkedDoc();
-
-  };
 
   /**
    * initialize cm text with ot on socket recieving doc
