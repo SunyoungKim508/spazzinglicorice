@@ -202,6 +202,7 @@ angular.module('devslate.services', ['ngCookies'])
 
   // TODO: get username from session
   var addTodo = function (todo) {
+    console.log('inside add todo TODO is', todo);
     return $http({
       method: 'POST',
       data: {todo: todo},

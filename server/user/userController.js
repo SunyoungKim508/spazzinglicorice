@@ -31,7 +31,7 @@ module.exports = {
       .then(function (user) {
         user.todos.push(todo);
         user.save(function (err, user) {
-          res.json(todo);
+          res.send(user.todos);
         });
       })
       .fail(function (error) {
