@@ -51,12 +51,13 @@ angular.module('devslate.user', [])
   };
 
   $scope.addTodo = function (todo) {
-    console.log('todo ', $scope.todo,' has been added');
+    console.log('todo ', todo,' has been added');
     User.addTodo(todo)
-      .then(function (todos) {
-        //$scope.getTodos();
-        console.log('we got back', todos);
-        $scope.todos = todos;
+      .then(function (response) {
+        // clear input box
+        $scope.todo = "";
+        // update todos
+        $scope.todos = response.data;
       })
       .catch(function (err) {
         console.log(err);

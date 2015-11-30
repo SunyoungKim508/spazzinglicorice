@@ -60,7 +60,7 @@
         <div class="todo">
           <h3>Todo List</h3>
           <input id="new-todo" placeholder="Got a task?" ng-model="todo" autofocus>
-          <button class="add-btn" ng-click="addTodo()"><h2>Add</h2></button>
+          <button class="add-btn" ng-click="addTodo(todo)"><h2>Add</h2></button>
           <ul>
             <li ng-repeat="todo in todos track by $index"><span>{{todo}}</span></li>
           </ul>
