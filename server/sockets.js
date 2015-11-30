@@ -21,6 +21,7 @@ var connect = function(boardUrl, board, io) {
   var socketIOServer = new ot.EditorSocketIOServer(board.codebox || 'test', [], 'demo');
   var usercount = 0;
 
+
   whiteboard.once('connection', function(socket) {
     // add client to ot instance
     socketIOServer.addClient(socket);

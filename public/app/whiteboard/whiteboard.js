@@ -52,8 +52,15 @@ angular.module('devslate.whiteboard', [])
 
           //initializing all the drawing functions inside .then because the socket
           //must be initialized before listeners are attached
-          element[0].width = window.innerWidth * 0.5;
-          element[0].height = window.innerHeight * 0.67;
+
+
+          // Make it visually fill the positioned parent
+          // ...then set the internal size to match
+          element[0].width  = element[0].offsetWidth;
+          element[0].height = element[0].offsetHeight;
+
+          // element[0].width = window.innerWidth * 0.5;
+          // element[0].height = window.innerHeight * 0.67;
           var context = element[0].getContext('2d');
 
           var otherUserActive = false;
