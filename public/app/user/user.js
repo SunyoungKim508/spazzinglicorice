@@ -42,7 +42,20 @@ angular.module('devslate.user', [])
   $scope.getTodos = function () {
     User.getTodos()
       .then(function (todos) {
-        console.log(todos);
+        console.log('',todos);
+        $scope.todos = todos;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+
+  $scope.addTodo = function (todo) {
+    console.log('todo ', $scope.todo,' has been added');
+    User.addTodo(todo)
+      .then(function (todos) {
+        //$scope.getTodos();
+        console.log('we got back', todos);
         $scope.todos = todos;
       })
       .catch(function (err) {

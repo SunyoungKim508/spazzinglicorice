@@ -6,6 +6,8 @@ module.exports = {
   getTodos: function (req, res) {
     var findTodos = Q.nbind(User.findOne, User);
     var fbId = req.session.passport.user.facebookId;
+    console.log('insde get todos!');
+    console.log("USER", req.session.passport.user)
     console.log(req.session.passport.user.facebookId);
     findTodos({facebookId: fbId})
       .then(function (user) {
@@ -19,6 +21,8 @@ module.exports = {
   // need user to add todo
   // user from the session
   addTodo: function (req, res) {
+    console.log("inside add todo", req.session.passport.user);
+    console.log("inside add todo, TODO is ", req.body.todo);
     var findUser = Q.nbind(User.findOne, User);
     var fbId = req.session.passport.user.facebookId;
     var todo = req.body.todo;
