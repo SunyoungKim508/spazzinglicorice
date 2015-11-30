@@ -18,17 +18,13 @@ var connect = function(boardUrl, board, io) {
   // Set the Socket.io namespace to the boardUrl.
   var whiteboard = io.of(boardUrl);
   // initialize ot for codebox
-  var socketIOServer = new ot.EditorSocketIOServer(board.codebox || 'test', [], 'demo');
+  var socketIOServer = new ot.EditorSocketIOServer(board.codebox, [], board._id);
   var usercount = 0;
 
   whiteboard.once('connection', function(socket) {
     // add client to ot instance
     socketIOServer.addClient(socket);
-    socketIOServer.setName(socket, 'User' + usercount++);
-    // log any data that comes through
-    socket.on('operation', function (data) {
-      console.log(socketIOServer.document);
-    });
+    socketIOServer.setName(socket, 'User' + ++usercount);
 
     // require our separate modules - drawing, chat, etc...
     console.log('work');
@@ -43,15 +39,6 @@ var connect = function(boardUrl, board, io) {
       console.log('chatter' + msg);
       socket.broadcast.emit('chat message', msg);
     });
-    /**
-     *    Socket functions for codebox
-     *    don't fuck around
-     */
-    socket.on('code-text', function (msg) {
-          console.log('recieved: \n', msg);
-          socket.broadcast.emit('code-text', msg);
-    });
-
 
     // require('./chatter/chatter.js')(socket, whiteboard);
 
