@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/boardstyle.css">
     <!-- <link rel="stylesheet" href="css/bootstrap-button.css"> -->
       <script src="bower_components/jquery/dist/jquery.min.js"></script>
       <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -27,15 +28,17 @@
   <body>
 
     <div ui-view></div>
-    <div class="container outer">
+    <div class="container-fluid board-code">
       <div class="row">
-        <div ui-view="whiteboard" class="whiteboard col-md-7"></div>
-        <div ui-view="chatbox"></div>
+        <div ui-view="whiteboard" class="whiteboard col-md-6 col-md-offset-1"></div>
         <div ui-view="codebox" class="codebox col-md-5"></div>
         <!-- <div ui-view="filedrop"></div> -->
       </div>
       <div class="row">
-        <div ui-view="toolbar"></div>
+        <div ui-view="toolbar" class="toolbar col-md-4"></div>
+      </div>
+      <div class="row">
+        <div ui-view="chatbox" class="chatbox col-md-8"></div>
       </div>
     </div>
 
