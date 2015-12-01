@@ -3,6 +3,8 @@ html {
   font-family: 'Permanent Marker', cursive;
 }
 
+html, body { height: 100%; width: 100%; margin: 0; }
+
 canvas {
   height: 100%;
   width: 100%;
@@ -13,6 +15,31 @@ canvas {
   margin-top: 3%;
   height: 100%;
 }
+
+.cover-heading {
+  font-size: 40px;
+  margin-bottom:10px;
+}
+
+.cover-container {
+  font-family: 'Roboto Slab', serif;
+  font-weight: Thin;
+}
+
+.facebookBtn:hover {
+  color: #eeeeee;
+}
+
+.cover-container h1 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: Bold;
+}
+
+.site-wrapper{
+  height: 80%;
+  position: absolute;
+}
+
 
 /*body {
   margin: 0;
