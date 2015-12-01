@@ -26,9 +26,9 @@ var connect = function(boardUrl, board, io) {
     socketIOServers[board._id].setName(socket, 'User' + ++usercount);
     // require our separate modules - drawing, chat, etc...
     console.log('work');
+    socket.emit('join', board);
     require('./drawing/drawing.js')(socket, Board);
     // console.log('about to emit join, board: ', board);
-    socket.emit('join', board);
     socket.on('chat-message', function (msg) {
       // console.log('are you working?');
       // console.log('chatter' + msg);
