@@ -1,7 +1,7 @@
 angular.module('devslate.user', [])
 
 .controller('UserCtrl', function ($scope, $state, $location, Board, User, $http, $rootScope, Authenticate) {
-// Set toolbar for colour palette and eraser. 
+// Set toolbar for colour palette and eraser.
   $scope.todos = [];
   $scope.bookmarks = [];
   $scope.profPicUrl = 'http://s3.amazonaws.com/readers/2011/10/29/penguin--openclipart--by-maw_2.png';
@@ -15,7 +15,7 @@ angular.module('devslate.user', [])
     }).then(function (data) {
       console.log('data inside get user: ', data);
       $scope.profPicUrl = data.data.data.url;
-    })
+    });
   };
   $scope.getUser();
 
@@ -26,13 +26,11 @@ angular.module('devslate.user', [])
   // go to the board
   // id: url of bookmark
   $scope.connectBoard = function (id) {
-    // connect proper socket
-    Board.connectBoard(id);
     // set id to currentBoard in root scope
     $rootScope.currentBoard = id;
     // go to board
     $state.go('board');
-  }
+  };
 
   // TODO
   $scope.createBoard = function (name) {
