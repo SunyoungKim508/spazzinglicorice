@@ -322,4 +322,13 @@ div.buttons {
   bottom: -25px;
   left: 400px;
 }
+.well {
+  min-height: 500px;
+  font-family: 'Permanent Marker', cursive;
+  background-color: rgba(0, 0, 0, 0);
+  background-size: 100%
+}
+.todo {
+  left: 400px;
+}
 
