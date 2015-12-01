@@ -8,7 +8,9 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Board = require('./db/board');
-var port = process.env.PORT || 8080;
+// TODO
+// var port = process.env.PORT || 8080;
+var port = 8080;
 var handleSocket = require('./server/sockets');
 var EventEmitter = require('events').EventEmitter;
 // necessary for file uploads
@@ -132,9 +134,6 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 ///////////////////////////////////////////////////////////////////////////////////////////
 // function to verify if user is authenticated --> will need to move to routes
 function isLoggedIn(req, res, next) {
-
-    console.log(req.isAuthenticated());
-
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
         return next();
@@ -152,7 +151,7 @@ require('./server/user/userRoutes.js')(userRouter);
 require('./server/board/boardRoutes.js')(boardRouter, Board, io);
 
 // TODO: add isLoggedIn
-app.get('/board/:url', function (req, res) {
+app.get('/board/:url', isLoggedIn, function (req, res) {
 // app.get('/board', isLoggedIn, function(req, res) {
   var url = req.params.url;
   console.log('url: ', url);

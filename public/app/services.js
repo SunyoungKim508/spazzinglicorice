@@ -19,7 +19,6 @@ angular.module('devslate.services', ['ngCookies'])
     changePen: changePen
   };
 })
-
 .factory('Board', function ($http, Socket) {
 //
 //
@@ -123,8 +122,17 @@ angular.module('devslate.services', ['ngCookies'])
     });
   };
 
+  var createBoard = function (name) {
+    return $http({
+      method: 'POST',
+      data: {name: name},
+      // url: 'http://devslate.elasticbeanstalk.com/api/board'
+      url: 'http://localhost:8080/api/board'
+    });
+  };
+
   return {
-    // initialize: initialize,
+    createBoard: createBoard,
     newBoard: newBoard,
     connectBoard: connectBoard
     // otherUserActive: otherUserActive,
@@ -233,7 +241,7 @@ angular.module('devslate.services', ['ngCookies'])
   var addBookmark = function (bookmark) {
     return $http({
       method: 'POST',
-      data: bookmark,
+      data: {bookmark: bookmark},
       // url: 'http://devslate.elasticbeanstalk.com/api/user/bookmark'
       url: 'http://localhost:8080/api/user/bookmark'
     });
@@ -250,8 +258,6 @@ angular.module('devslate.services', ['ngCookies'])
       return res.data;
     });
   };
-
-
 
   var getAllUser = function () {
 

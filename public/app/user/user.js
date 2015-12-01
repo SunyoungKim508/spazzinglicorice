@@ -1,15 +1,13 @@
 angular.module('devslate.user', [])
 
-.controller('UserCtrl', function ($scope, $location, User, $http, Authenticate) {
+.controller('UserCtrl', function ($scope, $state, $location, Board, User, $http, $rootScope, Authenticate) {
 // Set toolbar for colour palette and eraser. 
   $scope.todos = [];
   $scope.bookmarks = [];
   $scope.profPicUrl = 'http://s3.amazonaws.com/readers/2011/10/29/penguin--openclipart--by-maw_2.png';
 
   $scope.getUser = function (url) {
-    // send get request with facebook ID to get user profile picture
     var facebookId = Authenticate.user().facebookId;
-    //console.log('USER', Authenticate.user());
     $scope.user = Authenticate.user();
     $http({
       method: 'GET',
@@ -19,24 +17,31 @@ angular.module('devslate.user', [])
       $scope.profPicUrl = data.data.data.url;
     })
   };
-  console.log("running get user");
   $scope.getUser();
 
   $scope.bookmark = function (url) {
     $location.path(url);
   };
 
+  // go to the board
+  // id: url of bookmark
+  $scope.connectBoard = function (id) {
+    // connect proper socket
+    Board.connectBoard(id);
+    // set id to currentBoard in root scope
+    $rootScope.currentBoard = id;
+    // go to board
+    $state.go('board');
+  }
+
   // TODO
   $scope.createBoard = function (name) {
-    console.log('createBoard');
-    BoardDB.createBoard(name)
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (err) {
-        console.log(err);
+    console.log('Create Board');
+    $scope.newBoard = '';
+    Board.createBoard(name)
+      .then(function (bookmarks) {
+        $scope.bookmarks = bookmarks.data;
       });
-    // $location.path('/new');
   };
 
   $scope.getTodos = function () {
@@ -73,6 +78,20 @@ angular.module('devslate.user', [])
         console.log(err);
       });
   };
+
+  $scope.addBookmarks = function (bookmark) {
+    User.addBookmarks(bookmark)
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      })
+      .then(function (res) {
+        $scope.getBookmarks();
+        console.log($scope.bookmarks);
+      });
+  }
 
   $scope.getTodos();
   $scope.getBookmarks();

@@ -1,0 +1,8 @@
+# CONTENTS OF .DOCKERIGNORE
+
+node_modules/  
+bower_components/  
+*.log
+
+build/  
+dist/ 
