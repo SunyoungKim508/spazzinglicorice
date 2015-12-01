@@ -6,7 +6,7 @@ html {
 canvas {
   height: 100%;
   width: 100%;
-  border: 2px solid black;
+  border: 2px solid gray;
 }
 
 .container-fluid {
@@ -72,16 +72,18 @@ body {
 }
 
 .code {
-  border: 2px solid black;
+  border: 2px solid gray;
   height: 100%;
 }
 
 .chatbox {
   height: 11em;
+  padding: 2px;
   /*width: 100%;*/
 }
 
 #messages {
+  border: 2px solid gray;
   background-color: white;
   height: 8em;
 }
@@ -97,6 +99,9 @@ body {
   background-image: url('../images/slate.png');
 }
 
+.submit {
+  margin-left: 5px;
+}
 /*video {
 /*  position: fixed;
   /*-webkit-transform: translateX(-50%) translateY(-50%);
@@ -195,7 +200,6 @@ button:active {
 }
 div.buttons {
   margin-top: 0.4em;
-<<<<<<< b666f00ce6539ae6f45c145b5d03be77f458b58d
 }*/
 
 /* USER PROFILE PAGE */

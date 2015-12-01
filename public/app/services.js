@@ -4,15 +4,15 @@ angular.module('devslate.services', ['ngCookies'])
   // Set changePen method.
   // Note that an eraser is simply a white pen, not actually erasing [x,y] tuples from the database.
   var changePen = function(option) {
-    console.log($rootScope.app.pen);
+    console.log($rootScope.pen);
     if (option === 'eraser') {
       console.log("The user is using the eraser.");
-      $rootScope.app.pen.lineWidth = 50;
-      $rootScope.app.pen.strokeStyle = '#fff';
+      $rootScope.pen.lineWidth = 50;
+      $rootScope.pen.strokeStyle = '#fff';
     } else {
       console.log("The user is using the pen.");
-      $rootScope.app.pen.lineWidth = 5;
-      $rootScope.app.pen.strokeStyle = option;
+      $rootScope.pen.lineWidth = 5;
+      $rootScope.pen.strokeStyle = option;
     }
   };
   return {

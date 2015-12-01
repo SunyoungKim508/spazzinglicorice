@@ -74,7 +74,7 @@ angular.module('devslate.whiteboard', [])
             y: 0
           };
 
-          var pen = {
+          $rootScope.pen = {
             fillStyle: 'solid',
             strokeStyle: 'black',
             lineWidth: 5,
@@ -105,10 +105,10 @@ angular.module('devslate.whiteboard', [])
               mouse.x = event.offsetX;
               mouse.y = event.offsetY;
 
-              initializeMouseDown(pen, mouse.x, mouse.y);
+              initializeMouseDown($rootScope.pen, mouse.x, mouse.y);
 
               //Emit the pen object through socket
-              Socket.emit('start', pen);
+              Socket.emit('start', $rootScope.pen);
               Socket.emit('hello', null);
               //Add the first mouse coordinates to the stroke array for storage
               stroke.push([mouse.x, mouse.y]);
@@ -145,7 +145,7 @@ angular.module('devslate.whiteboard', [])
               mouse.drag = false;
               mouse.click = false;
 
-              console.log('Drawing is finished and its data being pushed to server', [stroke, pen]);
+              console.log('Drawing is finished and its data being pushed to server', [stroke, $rootScope.pen]);
 
               //Empty the stroke array.
               stroke = [];
