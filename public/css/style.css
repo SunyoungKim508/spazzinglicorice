@@ -26,9 +26,10 @@ canvas {
   font-weight: Thin;
 }
 
-.cover-containter .facebookBtn btn {
-  font-weight: Thin;
+.facebookBtn:hover {
+  color: #eeeeee;
 }
+
 .cover-container h1 {
   font-family: 'Roboto Slab', serif;
   font-weight: Bold;
