@@ -68,12 +68,12 @@ h1 {
 }
 
 .toolbar {
-  background-image: url('../images/toolbar.jpg');
+  /*background-image: url('../images/toolbar.jpg');*/
   background-size: cover;
   height: 3em;
   /*background-color: #00BB9C;*/
-  width: 100%;
-  margin: 0 auto;
+  /*width: 100%;*/
+  /*margin: 0 auto;*/
   /*position: absolute;*/
 }
 
@@ -161,29 +161,6 @@ h1 {
   height: 37px;
 }
 
-
-.pens {
-  /*display: inline-block;*/
-  position: relative;
-  left: 50%;
-  top: -140%;
-  /*width: 100px;*/
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 input[type=checkbox] {
   visibility: hidden;
 }
@@ -192,7 +169,7 @@ input[type=checkbox] {
   height: 28px;
   background: #fcfff4;
   display: inline-block;
-  margin: 20px 5px;
+  margin: 5px 5px;
 
   background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
@@ -209,6 +186,7 @@ input[type=checkbox] {
   -moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
   box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
   position: relative;
+  left: 2.8em;
 }
 
 .palette label {

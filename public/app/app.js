@@ -19,28 +19,31 @@ angular.module('devslate', [
       })
       .state('board', {
         url: '/board',
-        views: {
-          'whiteboard': {
-            templateUrl: 'app/whiteboard/whiteboard.html',
-            controller: 'WhiteboardCtrl'
-          },
-          'codebox': {
-            templateUrl: 'app/codebox/codebox.html',
-            controller: 'CodeboxCtrl'
-          },
-          'chatbox': {
-            templateUrl: 'app/chatbox/chatbox.html',
-            controller: 'ChatboxCtrl'
-          },
-          'toolbar': {
-            templateUrl: 'app/toolbar/toolbar.html',
-            controller: 'ToolbarCtrl'
-          },
-          'toolbar.filedrop': {
-            templateUrl: 'app/filedrop/filedrop.html',
-            controller: 'FiledropCtrl'
-          }
-        }
+        templateUrl: 'app/whiteboard/whiteboard.html'
+      // .state('board', {
+      //   url: '/board/:boardUrl',
+      //   views: {
+      //     'whiteboard': {
+      //       templateUrl: 'app/whiteboard/whiteboard.html',
+      //       controller: 'WhiteboardCtrl'
+      //     },
+      //     'codebox': {
+      //       templateUrl: 'app/codebox/codebox.html',
+      //       controller: 'CodeboxCtrl'
+      //     },
+      //     'chatbox': {
+      //       templateUrl: 'app/chatbox/chatbox.html',
+      //       controller: 'ChatboxCtrl'
+      //     },
+      //     'toolbar': {
+      //       templateUrl: 'app/toolbar/toolbar.html',
+      //       controller: 'ToolbarCtrl'
+      //     },
+      //     'toolbar.filedrop': {
+      //       templateUrl: 'app/filedrop/filedrop.html',
+      //       controller: 'FiledropCtrl'
+      //     }
+      //   }
       })
       .state('userpage', {
         url: '/user',
