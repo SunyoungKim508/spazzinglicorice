@@ -204,6 +204,7 @@ div.buttons {
 
 /* USER PROFILE PAGE */
  .card {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/7/78/Cork_closeup.jpg);
   background-color: rgba(214, 224, 226, 0.2);
 /*    -webkit-border-top-left-radius:5px;
   -moz-border-top-left-radius:5px;
@@ -234,7 +235,7 @@ div.buttons {
   filter: blur(1px);*/
   margin-left: -100px;
   margin-top: -200px;
-  max-width: 100%;
+  max-width: 120%;
 }
 .card.hovercard .useravatar {
   position: absolute;
@@ -265,6 +266,7 @@ div.buttons {
   transform: rotate(5deg);
   font-family: 'Permanent Marker', cursive;
 }
+
 .card.hovercard .card-info .card-title {
   padding:0 5px;
   font-size: 20px;
@@ -283,6 +285,16 @@ div.buttons {
   color: #737373;
   text-overflow: ellipsis;
 }
+.card.hovercard .paper-info {
+  position: absolute;
+  bottom: 120px;
+  left: 500px;
+  -ms-transform: rotate(-5deg); /* IE 9 */
+  -webkit-transform: rotate(-5deg); /* Chrome, Safari, Opera */
+  transform: rotate(-5deg);
+  font-family: 'Permanent Marker', cursive;
+  font-size: 60px;
+}
 .card.hovercard .bottom {
   padding: 0 20px;
   margin-bottom: 17px;
@@ -295,7 +307,19 @@ div.buttons {
   bottom: 215px;
   left: 200px;
 }
-
+.thumbtack-paper {
+  position: absolute;
+  bottom: 205px;
+  left: 620px;
+}
 #thumbtack {
   height: 55px;
 }
+#paper {
+  position: absolute;
+  height: 360px;
+  width: 460px;
+  bottom: -25px;
+  left: 400px;
+}
+
