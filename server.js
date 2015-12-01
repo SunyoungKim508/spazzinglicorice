@@ -82,44 +82,6 @@ app.get('/new', function(req, res) {
   res.send(id);
 });
 
-
-// **Wildcard route & board id handler.**
-
-//TODO: Need this to be acutally routed --> COMMENTED OUT ORIGINAL BELOW
-////////////////////////////////////////////////////////////////////////////////////////////////
-// app.get('/564eca8fe594c70300b6380b', isLoggedIn, function(req, res) {
-//   var id = req.url.slice(1);
-//   Board.findOne({id: id}, function(err, board) {
-//     // If the board doesn't exist, or the route is invalid,
-//     // then redirect to the home page.
-//     if (err) {
-//       res.redirect('/');
-//     } else {
-//       // Invoke [request handler](../documentation/sockets.html) for a new socket connection
-//       // with board id as the Socket.io namespace.
-//       handleSocket(req.url, board, io);
-//       // Send back whiteboard html template.
-//       res.sendFile(__dirname + '/public/board.html');
-//     }
-//   });
-// });
-app.get('/564eca8fe594c70300b6380b', isLoggedIn, function(req, res) {
-  var id = req.url.slice(1);
-  Board.findOne({id: id}, function(err, board) {
-    // If the board doesn't exist, or the route is invalid,
-    // then redirect to the home page.
-    if (err) {
-      res.redirect('/');
-    } else {
-      // Invoke [request handler](../documentation/sockets.html) for a new socket connection
-      // with board id as the Socket.io namespace.
-      handleSocket(req.url, board, io);
-      // Send back whiteboard html template.
-      res.send(req.url);
-    }
-  });
-});
-
 ///////////////////// FACEBOOK ROUTES //////////////////////////////////////////
 
 // route for facebook authentication and login
